@@ -20,7 +20,6 @@ class App extends Component {
         if (this.state.board[ev.target.dataset.cell] === ''){
         
             this.state.board[ev.target.dataset.cell] = this.state.player;
-
             ev.target.innerText = this.state.player;
             this.setState({
                 player: this.state.player === this.state.huPlayer ? this.state.aiPlayer : this.state.huPlayer,
