@@ -17,14 +17,17 @@ class App extends Component {
 
 
     clicked(ev){
-        this.state.board[ev.target.dataset.cell] = this.state.player;
+        if (this.state.board[ev.target.dataset.cell] === ''){
+        
+            this.state.board[ev.target.dataset.cell] = this.state.player;
 
-        ev.target.innerText = this.state.player;
-        this.setState({
-            player: this.state.player === this.state.huPlayer ? this.state.aiPlayer : this.state.huPlayer,
-            board: this.state.board
-        })
-        console.log("cell: ",ev.target.dataset.cell)
+            ev.target.innerText = this.state.player;
+            this.setState({
+                player: this.state.player === this.state.huPlayer ? this.state.aiPlayer : this.state.huPlayer,
+                board: this.state.board
+            })
+            console.log("board: ",this.state.board)
+        }
     }
 
   render() {
