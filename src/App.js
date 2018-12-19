@@ -10,23 +10,85 @@ class App extends Component {
             huPlayer: 'X',
             player: 'X',
             gameOver: false,
-            board: Array(9).fill('')
-        }
+            endingText: null,
+            winner: undefined
+        };
+        this.gamestate = {
+            board: Array(9).fill(''),
+            totalMoves: 0
+        };
 
     }
 
 
     clicked(ev){
-        if (this.state.board[ev.target.dataset.cell] === ''){
+        // Only do anything if no player has already occupied the cell
+        if (this.gamestate.board[ev.target.dataset.cell] === ''){
         
-            this.state.board[ev.target.dataset.cell] = this.state.player;
+            this.gamestate.board[ev.target.dataset.cell] = this.state.player;
             ev.target.innerText = this.state.player;
             this.setState({
                 player: this.state.player === this.state.huPlayer ? this.state.aiPlayer : this.state.huPlayer,
-                board: this.state.board
             })
-            console.log("board: ",this.state.board)
+
+            this.gamestate.totalMoves++;
+
+            let result = this.checkWinner();
+
+            if (result === this.state.huPlayer){
+                this.setState({
+                    gameOver: true,
+                    winner: this.state.huPlayer,
+                    endingText: 'Human Player Wins!'
+                })
+            }
+            else if (result === this.state.aiPlayer){
+                this.setState({
+                    gameOver: true,
+                    winner: this.state.aiPlayer,
+                    endingText: 'AI Player wins!'
+                })
+            }
+            else if (result === 'draw'){
+                this.setState({
+                    gaveOver: true,
+                    winner: 'Draw',
+                    endingText: "Game is a draw!  (That's actually the best possible!)"
+                })
+            }
+
+
+            console.log("board: ",this.gamestate.board)
+            console.log("winner: ",this.state.winner)
+            console.log("gameOver: ",this.state.gameOver)
+            console.log("endingText",this.state.endingText)
+            console.log("totalMoves",this.gamestate.totalMoves)
         }
+    }
+
+    checkWinner(){
+
+        // create possible winning moves
+        let moves = [
+            [0,1,2],[3,4,5],[6,7,8],
+            [0,3,6],[1,4,7],[2,5,8],
+            [0,4,8],[2,4,6]
+        ];
+        
+        let board = this.gamestate.board;
+
+        // iterate through each winning combination and check with state.board
+        for (let i=0; i<moves.length; i++){
+            if(board[moves[i][0]] === board[moves[i][1]] && board[moves[i][1]] === board[moves[i][2]]){
+                return board[moves[i][0]];
+            } 
+        }
+
+        if (this.gamestate.totalMoves >= 9){
+            return 'draw'
+        }
+
+
     }
 
   render() {
@@ -49,7 +111,7 @@ class App extends Component {
 
 
         <div className="endgame">
-            <div className="text"></div>
+            <div>{this.state.endingText}</div>
         </div>
 
 

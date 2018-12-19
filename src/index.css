@@ -58,6 +58,11 @@ table tr td:last-child {
   font-family:  "Comic Sans MS", cursive, sans-serif;
   font-size:  70px;
   cursor: pointer;
+  user-select: none;
+}
+
+.cell:hover {
+    background: #ccc;
 }
 
 .empty-top {
@@ -74,17 +79,16 @@ table tr td:last-child {
 }
 
 .endgame {
-  display: none;
-  width:  200px;
+  display: block;
+  width:  400px;
   top: 10%;
   position: absolute;
   left: 50%;
-  margin-left: -100px;
+  margin-left: -200px;
   padding-top: 20px;
   padding-bottom: 20px;
   text-align: center;
   border-radius: 5px;
-  background-color: #ffff66;
   color: black;
   font-size: 2em; 
 }
