@@ -57,13 +57,31 @@ class App extends Component {
             }
 
 
+            // Here is where we call the AI Function for the aiPlayer
+            if (this.gamestate.player === this.state.aiPlayer){
+               console.log('Computer turn...')
+            }
+
+
+
+            // Do some checking on state...
             console.log("board: ",this.gamestate.board)
             console.log("winner: ",this.state.winner)
             console.log("gameOver: ",this.gamestate.gameOver)
             console.log("endingText",this.state.endingText)
             console.log("totalMoves",this.gamestate.totalMoves)
+            console.log("emptyCells",this.emptyCells())
         }
     }
+
+    emptyCells(){
+        let emptyArr = {};
+        for (let i=0; i<this.gamestate.board.length; i++){
+            if (this.gamestate.board[i] === '') emptyArr[i] = this.gamestate.board[i];
+        }
+        return Object.keys(emptyArr);
+    }
+
 
     checkWinner(){
 
