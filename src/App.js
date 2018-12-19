@@ -8,59 +8,58 @@ class App extends Component {
         this.state = {
             aiPlayer: '0',
             huPlayer: 'X',
-            player: 'X',
-            gameOver: false,
             endingText: null,
             winner: undefined
         };
         this.gamestate = {
             board: Array(9).fill(''),
-            totalMoves: 0
+            totalMoves: 0,
+            player: 'X',
+            gameOver: false,
         };
 
     }
 
 
-    clicked(ev){
+    clicked(cell){
         // Only do anything if no player has already occupied the cell
-        if (this.gamestate.board[ev.target.dataset.cell] === ''){
+        if (this.gamestate.board[cell.dataset.cell] === '' && !this.gamestate.gameOver){
         
-            this.gamestate.board[ev.target.dataset.cell] = this.state.player;
-            ev.target.innerText = this.state.player;
-            this.setState({
-                player: this.state.player === this.state.huPlayer ? this.state.aiPlayer : this.state.huPlayer,
-            })
+            this.gamestate.board[cell.dataset.cell] = this.gamestate.player;
+            cell.innerText = this.gamestate.player;
 
+
+            this.gamestate.player = this.gamestate.player === this.state.huPlayer ? this.state.aiPlayer : this.state.huPlayer;
             this.gamestate.totalMoves++;
 
             let result = this.checkWinner();
 
             if (result === this.state.huPlayer){
                 this.setState({
-                    gameOver: true,
                     winner: this.state.huPlayer,
                     endingText: 'Human Player Wins!'
                 })
+                this.gamestate.gameOver = true;
             }
             else if (result === this.state.aiPlayer){
                 this.setState({
-                    gameOver: true,
                     winner: this.state.aiPlayer,
                     endingText: 'AI Player wins!'
                 })
+                this.gamestate.gameOver = true;
             }
             else if (result === 'draw'){
                 this.setState({
-                    gaveOver: true,
                     winner: 'Draw',
                     endingText: "Game is a draw!  (That's actually the best possible!)"
                 })
+                this.gamestate.gameOver = true;
             }
 
 
             console.log("board: ",this.gamestate.board)
             console.log("winner: ",this.state.winner)
-            console.log("gameOver: ",this.state.gameOver)
+            console.log("gameOver: ",this.gamestate.gameOver)
             console.log("endingText",this.state.endingText)
             console.log("totalMoves",this.gamestate.totalMoves)
         }
@@ -97,7 +96,7 @@ class App extends Component {
 
       <h1>Unbeatable Tic Tac Toe AI</h1>
 
-        <div className="board" onClick={(ev)=>this.clicked(ev)}>
+        <div className="board" onClick={(ev)=>this.clicked(ev.target)}>
                 <div className="cell empty-top empty-left" id="0" data-cell="0"></div>
                 <div className="cell empty-top"            id="1" data-cell="1"></div>
                 <div className="cell empty-top empty-right" id="2" data-cell="2"></div>
