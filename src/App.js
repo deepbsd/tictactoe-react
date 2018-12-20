@@ -25,15 +25,18 @@ class App extends Component {
         // Only do anything if no player has already occupied the cell
         if (this.gamestate.board[cell.dataset.cell] === '' && !this.gamestate.gameOver){
         
+            // create 'gamestate' state so we can update it immediately and not cause a re-render
             this.gamestate.board[cell.dataset.cell] = this.gamestate.player;
             cell.innerText = this.gamestate.player;
 
-
+            // update the moves, whoever generates a 'click' and change the player accordingly
             this.gamestate.player = this.gamestate.player === this.state.huPlayer ? this.state.aiPlayer : this.state.huPlayer;
             this.gamestate.totalMoves++;
 
+            // check for game completion and resulting outcome
             let result = this.checkWinner();
 
+            // human player
             if (result === this.state.huPlayer){
                 this.setState({
                     winner: this.state.huPlayer,
@@ -41,6 +44,7 @@ class App extends Component {
                 })
                 this.gamestate.gameOver = true;
             }
+            // AI player
             else if (result === this.state.aiPlayer){
                 this.setState({
                     winner: this.state.aiPlayer,
@@ -48,6 +52,7 @@ class App extends Component {
                 })
                 this.gamestate.gameOver = true;
             }
+            // tie game
             else if (result === 'draw'){
                 this.setState({
                     winner: 'Draw',
@@ -79,12 +84,13 @@ class App extends Component {
         for (let i=0; i<this.gamestate.board.length; i++){
             if (this.gamestate.board[i] === '') emptyArr[i] = this.gamestate.board[i];
         }
-        return Object.keys(emptyArr);
+        return Object.keys(emptyArr).map(function(item){
+            return parseInt(item, 10)
+        });
     }
 
 
     checkWinner(){
-
         // create possible winning moves
         let moves = [
             [0,1,2],[3,4,5],[6,7,8],
@@ -100,12 +106,9 @@ class App extends Component {
                 return board[moves[i][0]];
             } 
         }
-
         if (this.gamestate.totalMoves >= 9){
             return 'draw'
         }
-
-
     }
 
   render() {
