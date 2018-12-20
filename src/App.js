@@ -76,6 +76,7 @@ class App extends Component {
             console.log("endingText",this.state.endingText)
             console.log("totalMoves",this.gamestate.totalMoves)
             console.log("emptyCells",this.emptyCells())
+            console.log("checkTie", this.checkTie())
         }
     }
 
@@ -109,6 +110,11 @@ class App extends Component {
         if (this.gamestate.totalMoves >= 9){
             return 'draw'
         }
+    }
+
+    // return true or false
+    checkTie(){
+        return this.checkWinner() === 'draw';
     }
 
   render() {
