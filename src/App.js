@@ -63,8 +63,9 @@ class App extends Component {
 
 
             // Here is where we call the AI Function for the aiPlayer
-            if (this.gamestate.player === this.state.aiPlayer){
-               console.log('Computer turn...')
+            if (this.gamestate.player === 'O'){
+               this.clicked(this.dumbAi());
+               this.gamestate.player = this.state.huPlayer;
             }
 
 
@@ -77,6 +78,7 @@ class App extends Component {
             console.log("totalMoves",this.gamestate.totalMoves)
             console.log("emptyCells",this.emptyCells())
             console.log("checkTie", this.checkTie())
+            console.log("Random Choice of empty indexes: ", this.dumbAi())
         }
     }
 
@@ -117,6 +119,16 @@ class App extends Component {
         return this.checkWinner() === 'draw';
     }
 
+
+    // create a dumbAI before to test calling clicked()
+    dumbAi(){
+        let available = this.emptyCells();
+        let randIndex = available[Math.floor(Math.random()*available.length)];
+        //return available[randIndex];
+        return this.clicked(document.querySelectorAll('.cell')[randIndex])
+    }
+
+
   render() {
     return (
       <div className="App">
@@ -142,13 +154,14 @@ class App extends Component {
 
 
 
-        <div className = "selectSym">
-        <p>Your Symbol?</p>
-          <button onClick="selectSym('X')">X</button>
-          <button onClick="selectSym('O')">O</button>
-        </div>
-        <button onClick="startGame()" className="restart">Replay</button>
-
+        {/* 
+            <div className = "selectSym">
+            <p>Your Symbol?</p>
+              <button onClick="selectSym('X')">X</button>
+              <button onClick="selectSym('O')">O</button>
+            </div>
+            <button onClick="startGame()" className="restart">Replay</button>
+        */}
 
       </div>
     );
