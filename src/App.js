@@ -15,6 +15,7 @@ class App extends Component {
             board: Array(9).fill(''),
             totalMoves: 0,
             player: 'X',
+            gameLocked: false,
             gameOver: false,
         };
 
@@ -22,6 +23,9 @@ class App extends Component {
 
 
     clicked(cell){
+        // If game is locked, return
+        if (this.gamestate.gameLocked || this.gamestate.gameOver) return ;
+
         // Only do anything if no player has already occupied the cell
         if (this.gamestate.board[cell.dataset.cell] === '' && !this.gamestate.gameOver){
         
@@ -62,11 +66,6 @@ class App extends Component {
             }
 
 
-            // Here is where we call the AI Function for the aiPlayer
-            if (this.gamestate.player === 'O'){
-               this.clicked(this.dumbAi());
-               this.gamestate.player = this.state.huPlayer;
-            }
 
 
 
@@ -80,6 +79,26 @@ class App extends Component {
             console.log("checkTie", this.checkTie())
             console.log("Random Choice of empty indexes: ", this.dumbAi())
         }
+            
+        
+        // Here is where we call the AI Function for the aiPlayer
+        if (this.gamestate.player === 'O' && !this.gamestate.gameOver){
+
+           this.gamestate.gameLocked = true;
+        
+           //this.clicked(this.dumbAi());
+
+           let available = this.emptyCells();
+
+           setTimeout((available) => {
+               
+               let randIndex = available[Math.floor(Math.random()*available.length)];
+               this.gamestate.gameLocked = false;
+               this.clicked(document.querySelectorAll('.cell')[randIndex])
+
+           },1000)
+        }
+
     }
 
     emptyCells(){
