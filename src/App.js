@@ -67,18 +67,19 @@ class App extends Component {
         
             // Here is where we call the AI Function for the aiPlayer
             if (this.gamestate.player === this.state.aiPlayer && !this.gamestate.gameOver){
-               this.dumbAi();
+               //this.dumbAi();
+               this.smartAi();
             }
 
             // Do some checking on state...
+            console.log("Player: ", this.gamestate.player)
+            console.log("emptyCells",this.emptyCells())
             console.log("board: ",this.gamestate.board)
             console.log("winner: ",this.state.winner)
+            console.log("checkTie", this.checkTie())
             console.log("gameOver: ",this.gamestate.gameOver)
             console.log("endingText",this.state.endingText)
             console.log("totalMoves",this.gamestate.totalMoves)
-            console.log("emptyCells",this.emptyCells())
-            console.log("checkTie", this.checkTie())
-            console.log("Player: ", this.gamestate.player)
         }
             
     }
@@ -129,6 +130,20 @@ class App extends Component {
     }
 
 
+    // begin to use minimax algorithm
+    // I will need some more functions...
+    smartAi(){
+        let bestSpot = this.minimax(this.gamestate.board, this.state.player)
+        console.log("smart AI called! bestSpot = ",bestSpot)
+    }
+
+    minimax(newBoard, player){
+        let available = this.emptyCells();
+        let result = this.checkWinner()
+        console.log("minimax winner: ",available[Math.floor(Math.random()*available.length)])
+    }
+
+
   render() {
     return (
       <div className="App">
@@ -154,14 +169,12 @@ class App extends Component {
 
 
 
-        {/* 
-            <div className = "selectSym">
-            <p>Your Symbol?</p>
-              <button onClick="selectSym('X')">X</button>
-              <button onClick="selectSym('O')">O</button>
-            </div>
-            <button onClick="startGame()" className="restart">Replay</button>
-        */}
+        {/*     <div className = "selectSym">
+                <p>Your Symbol?</p>
+                  <button onClick="selectSym('X')">X</button>
+                  <button onClick="selectSym('O')">O</button>
+                </div>
+                <button onClick="startGame()" className="restart">Replay</button>       */}
 
       </div>
     );
