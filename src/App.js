@@ -65,10 +65,6 @@ class App extends Component {
                 this.gamestate.gameOver = true;
             }
 
-
-
-
-
             // Do some checking on state...
             console.log("board: ",this.gamestate.board)
             console.log("winner: ",this.state.winner)
@@ -83,20 +79,14 @@ class App extends Component {
         
         // Here is where we call the AI Function for the aiPlayer
         if (this.gamestate.player === 'O' && !this.gamestate.gameOver){
-
-           this.gamestate.gameLocked = true;
         
-           //this.clicked(this.dumbAi());
+           this.clicked(this.dumbAi());
 
-           let available = this.emptyCells();
-
-           setTimeout((available) => {
-               
-               let randIndex = available[Math.floor(Math.random()*available.length)];
-               this.gamestate.gameLocked = false;
-               this.clicked(document.querySelectorAll('.cell')[randIndex])
-
-           },1000)
+           //let available = this.emptyCells();
+           //let randIndex = available[Math.floor(Math.random()*available.length)];
+           //this.gamestate.gameLocked = false;
+           //this.clicked(document.querySelectorAll('.cell')[randIndex])
+           //this.gamestate.gameLocked = true;
         }
 
     }
