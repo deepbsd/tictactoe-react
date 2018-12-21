@@ -75,7 +75,7 @@ class App extends Component {
             console.log("Player: ", this.gamestate.player)
             console.log("emptyCells",this.emptyCells())
             console.log("board: ",this.gamestate.board)
-            console.log("winner: ",this.state.winner)
+            console.log("winner: ",this.checkWinner())
             console.log("checkTie", this.checkTie())
             console.log("gameOver: ",this.gamestate.gameOver)
             console.log("endingText",this.state.endingText)
@@ -140,7 +140,8 @@ class App extends Component {
     minimax(newBoard, player){
         let available = this.emptyCells();
         let result = this.checkWinner()
-        console.log("minimax winner: ",available[Math.floor(Math.random()*available.length)])
+        //console.log("minimax choice: ",available[Math.floor(Math.random()*available.length)])
+        console.log("minimax winner: ",result)
     }
 
 
