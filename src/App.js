@@ -77,16 +77,10 @@ class App extends Component {
         }
             
         
+
         // Here is where we call the AI Function for the aiPlayer
         if (this.gamestate.player === 'O' && !this.gamestate.gameOver){
-        
            this.clicked(this.dumbAi());
-
-           //let available = this.emptyCells();
-           //let randIndex = available[Math.floor(Math.random()*available.length)];
-           //this.gamestate.gameLocked = false;
-           //this.clicked(document.querySelectorAll('.cell')[randIndex])
-           //this.gamestate.gameLocked = true;
         }
 
     }
@@ -133,7 +127,6 @@ class App extends Component {
     dumbAi(){
         let available = this.emptyCells();
         let randIndex = available[Math.floor(Math.random()*available.length)];
-        //return available[randIndex];
         return this.clicked(document.querySelectorAll('.cell')[randIndex])
     }
 
