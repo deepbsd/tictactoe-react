@@ -27,7 +27,7 @@ class App extends Component {
         if (this.gamestate.gameLocked || this.gamestate.gameOver) return ;
 
         // Only do anything if no player has already occupied the cell
-        if (this.gamestate.board[cell.dataset.cell] === '' && !this.gamestate.gameOver){
+        if (this.gamestate.board[cell.dataset.cell] === ''){
         
             // create 'gamestate' state so we can update it immediately and not cause a re-render
             this.gamestate.board[cell.dataset.cell] = this.gamestate.player;
@@ -64,6 +64,12 @@ class App extends Component {
                 })
                 this.gamestate.gameOver = true;
             }
+        
+            // Here is where we call the AI Function for the aiPlayer
+            if (this.gamestate.player === this.state.aiPlayer && !this.gamestate.gameOver){
+               console.log("Are we there yet?")
+               this.dumbAi();
+            }
 
             // Do some checking on state...
             console.log("board: ",this.gamestate.board)
@@ -73,16 +79,9 @@ class App extends Component {
             console.log("totalMoves",this.gamestate.totalMoves)
             console.log("emptyCells",this.emptyCells())
             console.log("checkTie", this.checkTie())
-            console.log("Random Choice of empty indexes: ", this.dumbAi())
+            console.log("Player: ", this.gamestate.player)
         }
             
-        
-
-        // Here is where we call the AI Function for the aiPlayer
-        if (this.gamestate.player === 'O' && !this.gamestate.gameOver){
-           this.clicked(this.dumbAi());
-        }
-
     }
 
     emptyCells(){
@@ -127,7 +126,9 @@ class App extends Component {
     dumbAi(){
         let available = this.emptyCells();
         let randIndex = available[Math.floor(Math.random()*available.length)];
-        return this.clicked(document.querySelectorAll('.cell')[randIndex])
+        console.log("DUMBAI CHOICE: ",randIndex)
+        //this.gamestate.gameLocked = true;
+        this.clicked(document.querySelectorAll('.cell')[randIndex])
     }
 
 
