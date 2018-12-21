@@ -67,7 +67,6 @@ class App extends Component {
         
             // Here is where we call the AI Function for the aiPlayer
             if (this.gamestate.player === this.state.aiPlayer && !this.gamestate.gameOver){
-               console.log("Are we there yet?")
                this.dumbAi();
             }
 
@@ -126,8 +125,6 @@ class App extends Component {
     dumbAi(){
         let available = this.emptyCells();
         let randIndex = available[Math.floor(Math.random()*available.length)];
-        console.log("DUMBAI CHOICE: ",randIndex)
-        //this.gamestate.gameLocked = true;
         this.clicked(document.querySelectorAll('.cell')[randIndex])
     }
 
