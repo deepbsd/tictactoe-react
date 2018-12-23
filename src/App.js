@@ -85,7 +85,7 @@ class App extends Component {
             console.log("gameOver: ",this.gamestate.gameOver)
             console.log("endingText",this.state.endingText)
             console.log("totalMoves",this.gamestate.totalMoves)
-            console.log(this.checkWin(["X","X","X",3,4,"O",6,"O",8],"X"))
+            console.log("GAMEWON: ",this.checkWin(["X",1,"X","O","O","O",6,7,8],"O"))
         }
             
     }
@@ -100,6 +100,10 @@ class App extends Component {
         });
     }
 
+    // return true or false
+    checkTie(){
+        return this.checkWinner() === 'draw';
+    }
 
     checkWinner(){
         // create possible winning moves
@@ -122,11 +126,6 @@ class App extends Component {
         }
     }
 
-    // return true or false
-    checkTie(){
-        return this.checkWinner() === 'draw';
-    }
-
     // trying out another checkWin() function
     // this will be used by minimax()
     checkWin(board, player) {
@@ -139,10 +138,8 @@ class App extends Component {
 		  break;
 		}   
 	  }
-	  //return gameWon;
-      console.log("GAMEWON: ",gameWon);
+	  return gameWon;
     }
-
 
     // create a dumbAI before to test calling clicked()
     dumbAi(){
@@ -160,8 +157,17 @@ class App extends Component {
     }
 
     minimax(newBoard, player){
-        let available = this.emptyCells();
+        let availSpots = this.emptyCells();
         let result = this.checkWinner()
+  
+		if (this.checkWin(newBoard, this.huPlayer)) {
+		  return {score: -10};
+		} else if (this.checkWin(newBoard, this.aiPlayer)) {
+		  return {score: 10};
+		} else if (availSpots.length === 0) {
+		  return {score: 0};
+		}
+
         //console.log("minimax choice: ",available[Math.floor(Math.random()*available.length)])
         console.log("minimax winner: ",result)
     }
