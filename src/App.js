@@ -188,8 +188,32 @@ class App extends Component {
 			moves.push(move);
 		}
 
+        // third part of minimax
+		let bestMove, bestScore;
+		if (player === aiPlayer) {
+		    bestScore = -1000;
+		    for(let i = 0; i < moves.length; i++) {
+		        if (moves[i].score > bestScore) {
+				    bestScore = moves[i].score;
+				    bestMove = i;
+			    }
+			}
+	    } else {
+	        bestScore = 1000;
+		    for(let i = 0; i < moves.length; i++) {
+			    if (moves[i].score < bestScore) {
+				    bestScore = moves[i].score;
+				    bestMove = i;
+			    }
+			}
+		}
+
+
         //console.log("minimax choice: ",available[Math.floor(Math.random()*available.length)])
         console.log("minimax winner: ",result)
+
+        // return the best move
+        return moves[bestMove];
     }
 
 
