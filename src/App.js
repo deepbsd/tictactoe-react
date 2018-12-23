@@ -18,6 +18,11 @@ class App extends Component {
             gameLocked: false,
             gameOver: false,
         };
+        this.winningMoves = [
+            [0,1,2],[3,4,5],[6,7,8],
+            [0,3,6],[1,4,7],[2,5,8],
+            [0,4,8],[2,4,6]
+        ];
 
     }
 
@@ -80,6 +85,7 @@ class App extends Component {
             console.log("gameOver: ",this.gamestate.gameOver)
             console.log("endingText",this.state.endingText)
             console.log("totalMoves",this.gamestate.totalMoves)
+            console.log(this.checkWin(["X","X","X",3,4,"O",6,"O",8],"X"))
         }
             
     }
@@ -119,6 +125,22 @@ class App extends Component {
     // return true or false
     checkTie(){
         return this.checkWinner() === 'draw';
+    }
+
+    // trying out another checkWin() function
+    // this will be used by minimax()
+    checkWin(board, player) {
+      let winCombos = this.winningMoves;
+	  let plays = board.reduce((a, e, i) => (e === player) ? a.concat(i) : a, []);
+	  let gameWon = null;
+	  for (let [index, win] of winCombos.entries()) {
+		if (win.every(elem => plays.indexOf(elem) > -1)) {
+		  gameWon = {index: index, player: player};
+		  break;
+		}   
+	  }
+	  //return gameWon;
+      console.log("GAMEWON: ",gameWon);
     }
 
 
