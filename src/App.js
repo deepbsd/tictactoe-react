@@ -157,15 +157,35 @@ class App extends Component {
     }
 
     minimax(newBoard, player){
+        let huPlayer = this.huPlayer;
+        let aiPlayer = this.aiPlayer;
         let availSpots = this.emptyCells();
         let result = this.checkWinner()
   
-		if (this.checkWin(newBoard, this.huPlayer)) {
+		if (this.checkWin(newBoard, huPlayer)) {
 		  return {score: -10};
-		} else if (this.checkWin(newBoard, this.aiPlayer)) {
+		} else if (this.checkWin(newBoard, aiPlayer)) {
 		  return {score: 10};
 		} else if (availSpots.length === 0) {
 		  return {score: 0};
+		}
+
+        // second part of minimax
+		var moves = [];
+		for (let i = 0; i < availSpots.length; i ++) {
+		  var move = {};
+		  move.index = newBoard[availSpots[i]];
+		  newBoard[availSpots[i]] = player;
+
+		  if (player === aiPlayer)
+			move.score = this.minimax(newBoard, huPlayer).score;
+		  else
+			 move.score =  this.minimax(newBoard, aiPlayer).score;
+		  newBoard[availSpots[i]] = move.index;
+		  if ((player === aiPlayer && move.score === 10) || (player === huPlayer && move.score === -10))
+			return move;
+		  else
+			moves.push(move);
 		}
 
         //console.log("minimax choice: ",available[Math.floor(Math.random()*available.length)])
