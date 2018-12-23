@@ -85,7 +85,6 @@ class App extends Component {
             console.log("gameOver: ",this.gamestate.gameOver)
             console.log("endingText",this.state.endingText)
             console.log("totalMoves",this.gamestate.totalMoves)
-            console.log("GAMEWON: ",this.checkWin(["X",1,"X","O","O","O",6,7,8],"O"))
         }
             
     }
@@ -152,8 +151,11 @@ class App extends Component {
     // begin to use minimax algorithm
     // I will need some more functions...
     smartAi(){
-        let bestSpot = this.minimax(this.gamestate.board, this.state.player)
+        let bestSpot = this.minimax(this.gamestate.board, this.state.player);
         console.log("smart AI called! bestSpot = ",bestSpot)
+
+        // gonna have to return a click event eventually
+        //this.clicked(document.querySelectorAll('.cell')[bestSpot])
     }
 
     minimax(newBoard, player){
@@ -173,20 +175,22 @@ class App extends Component {
         // second part of minimax
 		var moves = [];
 		for (let i = 0; i < availSpots.length; i ++) {
-		  var move = {};
-		  move.index = newBoard[availSpots[i]];
-		  newBoard[availSpots[i]] = player;
+		    var move = {};
+		    move.index = newBoard[availSpots[i]];
+		    newBoard[availSpots[i]] = player;
 
-		  if (player === aiPlayer)
-			move.score = this.minimax(newBoard, huPlayer).score;
-		  else
-			 move.score =  this.minimax(newBoard, aiPlayer).score;
-		  newBoard[availSpots[i]] = move.index;
-		  if ((player === aiPlayer && move.score === 10) || (player === huPlayer && move.score === -10))
-			return move;
-		  else
-			moves.push(move);
+		    if (player === aiPlayer)
+			  move.score = this.minimax(newBoard, huPlayer).score;
+		    else
+			   move.score =  this.minimax(newBoard, aiPlayer).score;
+		    newBoard[availSpots[i]] = move.index;
+		    if ((player === aiPlayer && move.score === 10) || (player === huPlayer && move.score === -10))
+			  return move;
+		    else
+			  moves.push(move);
 		}
+        // what are we getting here?
+        console.log("MOVES: ",moves)
 
         // third part of minimax
 		let bestMove, bestScore;
@@ -209,8 +213,7 @@ class App extends Component {
 		}
 
 
-        //console.log("minimax choice: ",available[Math.floor(Math.random()*available.length)])
-        console.log("minimax winner: ",result)
+        console.log("minimax MovesObj: ",moves[bestMove])
 
         // return the best move
         return moves[bestMove];
