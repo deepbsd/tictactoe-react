@@ -85,22 +85,33 @@ class App extends Component {
             console.log("gameOver: ",this.gamestate.gameOver)
             console.log("endingText",this.state.endingText)
             console.log("totalMoves",this.gamestate.totalMoves)
-            console.log("checkWin()",this.checkWin(["X","X","X",3,4,5,6,7,8],"X"))
+            //console.log("checkWin()",this.checkWin(["X","X","X",3,4,5,6,7,8],"X"))
         }
             
     }
 
+
+
+    // ======= This gets called a lot from minimax
     emptyCells(board=this.gamestate.board){
-        let emptyArr = {};
+        //let emptyArr = {};
+        let emptyArr = [];
         //for (let i=0; i<this.gamestate.board.length; i++){
         for (let i=0; i<board.length; i++){
             //if (this.gamestate.board[i] === '') emptyArr[i] = this.gamestate.board[i];
             if (board[i] === '') emptyArr[i] = board[i];
         }
-        return Object.keys(emptyArr).map(function(item){
-            return parseInt(item, 10)
-        });
+        //return Object.keys(emptyArr).map(function(item){
+        //    return parseInt(item, 10)
+        //});
+
+        board.filter((element,i) => i===element)
+
+        //return board.filter((element, i) => i===element);
+        return board;
     }
+
+
 
     // return true or false
     checkTie(){
@@ -162,11 +173,13 @@ class App extends Component {
     }
 
     minimax(newBoard, player){
-        //console.log("this.state: ",this.state)
+        console.log("MINIMAX--this.gamestate: ",this.gamestate)
         let huPlayer = "X";
         let aiPlayer = "O";
+
         // Wait! has to be empty cells just for this newBoard...
         let availSpots = this.emptyCells(newBoard);
+        console.log("AVAILSPOTS",availSpots)
 
   
 		if (this.checkWin(newBoard, huPlayer)) {
@@ -187,7 +200,6 @@ class App extends Component {
 		    newBoard[availSpots[i]] = player;
 
             // DEBUGGING
-            if (player === 'undefined') console.log("UNDEFINED: ",player)
             console.log("INDEX A NUMBER???: ", move.index)
             console.log("MOVE",move)
             console.log("BOARD: ",newBoard)
