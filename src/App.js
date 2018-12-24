@@ -160,11 +160,11 @@ class App extends Component {
     }
 
     minimax(newBoard, player){
-        console.log("this.state: ",this.state)
-        let huPlayer = this.state.huPlayer;
-        let aiPlayer = this.state.aiPlayer;
+        //console.log("this.state: ",this.state)
+        let huPlayer = "X";
+        let aiPlayer = "O";
         let availSpots = this.emptyCells();
-        let result = this.checkWinner()
+        //let result = this.checkWinner()
   
 		if (this.checkWin(newBoard, huPlayer)) {
 		  return {score: -10};
@@ -176,10 +176,17 @@ class App extends Component {
 
         // second part of minimax
 		var moves = [];
-		for (let i = 0; i < availSpots.length; i ++) {
+		for (let i = 0; i < availSpots.length; i++) {
 		    var move = {};
+
 		    move.index = newBoard[availSpots[i]];
+
 		    newBoard[availSpots[i]] = player;
+
+            console.log("INDEX A NUMBER???: ",move.index)
+            console.log("BOARD: ",newBoard)
+            console.log("AVAIL SPOTS[i]: ",availSpots[i])
+            console.log("PLAYER: ",player)
 
 		    if (player === aiPlayer)
 			  move.score = this.minimax(newBoard, huPlayer).score;
