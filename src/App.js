@@ -90,10 +90,12 @@ class App extends Component {
             
     }
 
-    emptyCells(){
+    emptyCells(board=this.gamestate.board){
         let emptyArr = {};
-        for (let i=0; i<this.gamestate.board.length; i++){
-            if (this.gamestate.board[i] === '') emptyArr[i] = this.gamestate.board[i];
+        //for (let i=0; i<this.gamestate.board.length; i++){
+        for (let i=0; i<board.length; i++){
+            //if (this.gamestate.board[i] === '') emptyArr[i] = this.gamestate.board[i];
+            if (board[i] === '') emptyArr[i] = board[i];
         }
         return Object.keys(emptyArr).map(function(item){
             return parseInt(item, 10)
@@ -163,8 +165,9 @@ class App extends Component {
         //console.log("this.state: ",this.state)
         let huPlayer = "X";
         let aiPlayer = "O";
-        let availSpots = this.emptyCells();
-        //let result = this.checkWinner()
+        // Wait! has to be empty cells just for this newBoard...
+        let availSpots = this.emptyCells(newBoard);
+
   
 		if (this.checkWin(newBoard, huPlayer)) {
 		  return {score: -10};
@@ -183,9 +186,13 @@ class App extends Component {
 
 		    newBoard[availSpots[i]] = player;
 
-            console.log("INDEX A NUMBER???: ",move.index)
+            // DEBUGGING
+            if (player === 'undefined') console.log("UNDEFINED: ",player)
+            console.log("INDEX A NUMBER???: ", move.index)
+            console.log("MOVE",move)
             console.log("BOARD: ",newBoard)
             console.log("AVAIL SPOTS[i]: ",availSpots[i])
+            console.log("AVAILSPOTS: ",availSpots)
             console.log("PLAYER: ",player)
 
 		    if (player === aiPlayer)
