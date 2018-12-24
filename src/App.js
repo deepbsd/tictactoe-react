@@ -85,6 +85,7 @@ class App extends Component {
             console.log("gameOver: ",this.gamestate.gameOver)
             console.log("endingText",this.state.endingText)
             console.log("totalMoves",this.gamestate.totalMoves)
+            console.log("checkWin()",this.checkWin(["X","X","X",3,4,5,6,7,8],"X"))
         }
             
     }
@@ -126,7 +127,7 @@ class App extends Component {
     }
 
     // trying out another checkWin() function
-    // this will be used by minimax()
+    // this will be used by minimax() and must not affect state
     checkWin(board, player) {
       let winCombos = this.winningMoves;
 	  let plays = board.reduce((a, e, i) => (e === player) ? a.concat(i) : a, []);
@@ -152,15 +153,16 @@ class App extends Component {
     // I will need some more functions...
     smartAi(){
         let bestSpot = this.minimax(this.gamestate.board, this.state.player);
-        console.log("smart AI called! bestSpot = ",bestSpot)
+        console.log("smart AI called! bestSpot = ",bestSpot);
 
         // gonna have to return a click event eventually
         //this.clicked(document.querySelectorAll('.cell')[bestSpot])
     }
 
     minimax(newBoard, player){
-        let huPlayer = this.huPlayer;
-        let aiPlayer = this.aiPlayer;
+        console.log("this.state: ",this.state)
+        let huPlayer = this.state.huPlayer;
+        let aiPlayer = this.state.aiPlayer;
         let availSpots = this.emptyCells();
         let result = this.checkWinner()
   
