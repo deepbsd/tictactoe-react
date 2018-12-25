@@ -13,6 +13,7 @@ class App extends Component {
         };
         this.gamestate = {
             board: Array(9).fill(''),
+            numberBoard: [0,1,2,3,4,5,6,7,8],
             totalMoves: 0,
             player: 'X',
             gameLocked: false,
@@ -72,14 +73,15 @@ class App extends Component {
         
             // Here is where we call the AI Function for the aiPlayer
             if (this.gamestate.player === this.state.aiPlayer && !this.gamestate.gameOver){
-               //this.dumbAi();
-               this.smartAi();
+               this.dumbAi();
+               //this.smartAi();
             }
 
             // Do some checking on state...
             console.log("Player: ", this.gamestate.player)
             console.log("emptyCells",this.emptyCells())
             console.log("board: ",this.gamestate.board)
+            console.log("numberBoard: ",this.gamestate.numberBoard)
             console.log("winner: ",this.checkWinner())
             console.log("checkTie", this.checkTie())
             console.log("gameOver: ",this.gamestate.gameOver)
@@ -94,21 +96,32 @@ class App extends Component {
 
     // ======= This gets called a lot from minimax
     emptyCells(board=this.gamestate.board){
+
+        // board is not in correct format in gamestate
+        // create a Number Board
+        //for (let n=0; n<board.length; n++){
+        //    if (board[n] === "") board[n] = n;
+        //}
+
+        console.log("emptyCells() BOARD: ",board)
+        console.log("gamestate.board: ",this.gamestate.board)
+        console.log("gamestate.numberBoard: ",this.gamestate.numberBoard)
+
         //let emptyArr = {};
         let emptyArr = [];
         //for (let i=0; i<this.gamestate.board.length; i++){
         for (let i=0; i<board.length; i++){
             //if (this.gamestate.board[i] === '') emptyArr[i] = this.gamestate.board[i];
-            if (board[i] === '') emptyArr[i] = board[i];
+            if (board[i] === '') emptyArr[i] = this.gamestate.numberBoard[i];
         }
         //return Object.keys(emptyArr).map(function(item){
         //    return parseInt(item, 10)
         //});
 
-        board.filter((element,i) => i===element)
 
         //return board.filter((element, i) => i===element);
-        return board;
+        
+        return emptyArr.filter((element,i) => i===element);
     }
 
 
@@ -157,8 +170,11 @@ class App extends Component {
     // create a dumbAI before to test calling clicked()
     dumbAi(){
         let available = this.emptyCells();
-        let randIndex = available[Math.floor(Math.random()*available.length)];
-        this.clicked(document.querySelectorAll('.cell')[randIndex])
+        //let randCell = available[Math.floor(Math.random()*available.length)];
+        let randCell = available[Math.floor(Math.random()*available.length)];
+        console.log("dumbAI-->AVAIL: ",available, " randIndex: ",randCell)
+
+        this.clicked(document.querySelectorAll('.cell')[randCell])
     }
 
 
@@ -259,10 +275,10 @@ class App extends Component {
                 <div className="cell empty-top"            id="1" data-cell="1"></div>
                 <div className="cell empty-top empty-right" id="2" data-cell="2"></div>
                 <div className="cell empty-left"           id="3" data-cell="3"></div>
-                <div className="cell " id="4"                     data-cell="4"></div>
-                <div className="cell empty-right" id="5"          data-cell="5"></div>
+                <div className="cell "                     id="4" data-cell="4"></div>
+                <div className="cell empty-right"          id="5" data-cell="5"></div>
                 <div className="cell empty-bottom empty-left" id="6" data-cell="6"></div>
-                <div className="cell empty-bottom" id="7"         data-cell="7"></div>
+                <div className="cell empty-bottom"         id="7" data-cell="7"></div>
                 <div className="cell empty-bottom empty-right" id="8" data-cell="8"></div>
         </div>
 
