@@ -268,15 +268,8 @@ class App extends Component {
         return moves[bestMove];
     }
 
-    resetState(ev){
-        this.setState({
-                aiPlayer: '0',
-                huPlayer: 'X',
-                endingText: null,
-                winner: undefined
-        });
-        this.gamestate = this.resetState;
-
+    resetGame(ev){
+        window.location.reload();
     }
 
 
@@ -311,7 +304,7 @@ class App extends Component {
                   <button onClick="selectSym('O')">O</button>
                 </div>   */}
 
-                <button className="restart" onClick={(ev)=>this.resetState(ev)} >Replay</button>       
+                <button className="restart" onClick={(ev)=>this.resetGame(ev)} >Replay</button>       
 
       </div>
     );
