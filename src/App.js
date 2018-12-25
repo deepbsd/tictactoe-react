@@ -11,6 +11,14 @@ class App extends Component {
             endingText: null,
             winner: undefined
         };
+        this.resetState = {
+            board: Array(9).fill(''),
+            numberBoard: [0,1,2,3,4,5,6,7,8],
+            totalMoves: 0,
+            player: 'X',
+            gameLocked: false,
+            gameOver: false,
+        };
         this.gamestate = {
             board: Array(9).fill(''),
             numberBoard: [0,1,2,3,4,5,6,7,8],
@@ -98,7 +106,7 @@ class App extends Component {
     emptyCells(board=this.gamestate.board){
 
         // board is not in correct format in gamestate
-        // create a Number Board
+        // OR -- just use a different board in this.gamestate!!!
         //for (let n=0; n<board.length; n++){
         //    if (board[n] === "") board[n] = n;
         //}
@@ -117,8 +125,6 @@ class App extends Component {
         //return Object.keys(emptyArr).map(function(item){
         //    return parseInt(item, 10)
         //});
-
-
         //return board.filter((element, i) => i===element);
         
         return emptyArr.filter((element,i) => i===element);
@@ -189,14 +195,12 @@ class App extends Component {
     }
 
     minimax(newBoard, player){
-        console.log("MINIMAX--this.gamestate: ",this.gamestate)
         let huPlayer = "X";
         let aiPlayer = "O";
 
         // Wait! has to be empty cells just for this newBoard...
-        let availSpots = this.emptyCells(newBoard);
-        console.log("AVAILSPOTS",availSpots)
-
+        //let availSpots = this.emptyCells(newBoard);
+        let availSpots = this.emptyCells();
   
 		if (this.checkWin(newBoard, huPlayer)) {
 		  return {score: -10};
@@ -216,6 +220,7 @@ class App extends Component {
 		    newBoard[availSpots[i]] = player;
 
             // DEBUGGING
+            console.log("Minimax: ")
             console.log("INDEX A NUMBER???: ", move.index)
             console.log("MOVE",move)
             console.log("BOARD: ",newBoard)
@@ -263,6 +268,17 @@ class App extends Component {
         return moves[bestMove];
     }
 
+    resetState(ev){
+        this.setState({
+                aiPlayer: '0',
+                huPlayer: 'X',
+                endingText: null,
+                winner: undefined
+        });
+        this.gamestate = this.resetState;
+
+    }
+
 
   render() {
     return (
@@ -293,8 +309,9 @@ class App extends Component {
                 <p>Your Symbol?</p>
                   <button onClick="selectSym('X')">X</button>
                   <button onClick="selectSym('O')">O</button>
-                </div>
-                <button onClick="startGame()" className="restart">Replay</button>       */}
+                </div>   */}
+
+                <button className="restart" onClick={(ev)=>this.resetState(ev)} >Replay</button>       
 
       </div>
     );
