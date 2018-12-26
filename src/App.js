@@ -84,8 +84,8 @@ class App extends Component {
         
             // Here is where we call the AI Function for the aiPlayer
             if (this.gamestate.player === this.state.aiPlayer && !this.gamestate.gameOver){
-               this.dumbAi();
-               //this.smartAi();
+               //this.dumbAi();
+               this.smartAi();
             }
 
             // Do some checking on state...
@@ -212,10 +212,12 @@ class App extends Component {
 			  move.score = this.minimax(newBoard, huPlayer).score;
 		    else
 			   move.score =  this.minimax(newBoard, aiPlayer).score;
+
 		    newBoard[availSpots[i]] = move.index;
-		    if ((player === aiPlayer && move.score === 10) || (player === huPlayer && move.score === -10))
+		    if ((player === aiPlayer && move.score === 10) || (player === huPlayer && move.score === -10)){
+              if (move.index === 'undefined' || move.score === 'undefined') console.log("**************** Move Undefined **************************")
 			  return move;
-		    else
+            } else
 			  moves.push(move);
 		}
         // what are we getting here?
