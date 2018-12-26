@@ -168,7 +168,6 @@ class App extends Component {
     minimax(newBoard, player){
         let huPlayer = "X";
         let aiPlayer = "O";
-        let aplayer = player;
 
         let availSpots = this.emptyCells(newBoard);
   
