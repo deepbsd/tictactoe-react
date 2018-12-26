@@ -12,18 +12,14 @@ class App extends Component {
             winner: undefined
         };
         this.resetState = {
-            //board: Array(9).fill(''),
             board: Array.from(Array(9).keys()),
-            //numberBoard: [0,1,2,3,4,5,6,7,8],
             totalMoves: 0,
             player: 'X',
             gameLocked: false,
             gameOver: false,
         };
         this.gamestate = {
-            //board: Array(9).fill(''),
             board: Array.from(Array(9).keys()),
-            //numberBoard: [0,1,2,3,4,5,6,7,8],
             totalMoves: 0,
             player: 'X',
             gameLocked: false,
@@ -92,17 +88,13 @@ class App extends Component {
             console.log("Player: ", this.gamestate.player)
             console.log("emptyCells",this.emptyCells())
             console.log("board: ",this.gamestate.board)
-            //console.log("numberBoard: ",this.gamestate.numberBoard)
             console.log("winner: ",this.checkWinner())
             console.log("checkTie", this.checkTie())
             console.log("gameOver: ",this.gamestate.gameOver)
             console.log("endingText",this.state.endingText)
             console.log("totalMoves",this.gamestate.totalMoves)
-            //console.log("checkWin()",this.checkWin(["X","X","X",3,4,5,6,7,8],"X"))
         }
-            
     }
-
 
 
     // ======= This gets called a lot from minimax
@@ -110,13 +102,13 @@ class App extends Component {
         return board.filter((element,i) => i===element);
     }
 
-
-
     // return true or false
     checkTie(){
         return this.checkWinner() === 'draw';
     }
 
+    // this function is used by this.gamestate
+    // not for use by minimax
     checkWinner(){
         // create possible winning moves
         let moves = [
@@ -156,7 +148,6 @@ class App extends Component {
     // create a dumbAI before to test calling clicked()
     dumbAi(){
         let available = this.emptyCells();
-        //let randCell = available[Math.floor(Math.random()*available.length)];
         let randCell = available[Math.floor(Math.random()*available.length)];
         console.log("dumbAI-->AVAIL: ",available, " randIndex: ",randCell)
 
@@ -178,9 +169,7 @@ class App extends Component {
         let huPlayer = "X";
         let aiPlayer = "O";
 
-        // Wait! has to be empty cells just for this newBoard...
-        //let availSpots = this.emptyCells(newBoard);
-        let availSpots = this.emptyCells();
+        let availSpots = this.emptyCells(newBoard);
   
 		if (this.checkWin(newBoard, huPlayer)) {
 		  return {score: -10};
@@ -191,22 +180,12 @@ class App extends Component {
 		}
 
         // second part of minimax
-		var moves = [];
+		let moves = [];
 		for (let i = 0; i < availSpots.length; i++) {
-		    var move = {};
-
+		  
+            let move = {};
 		    move.index = newBoard[availSpots[i]];
-
 		    newBoard[availSpots[i]] = player;
-
-            // DEBUGGING
-            console.log("Minimax: ")
-            console.log("INDEX A NUMBER???: ", move.index)
-            console.log("MOVE",move)
-            console.log("BOARD: ",newBoard)
-            console.log("AVAIL SPOTS[i]: ",availSpots[i])
-            console.log("AVAILSPOTS: ",availSpots)
-            console.log("PLAYER: ",player)
 
 		    if (player === aiPlayer)
 			  move.score = this.minimax(newBoard, huPlayer).score;
@@ -215,13 +194,18 @@ class App extends Component {
 
 		    newBoard[availSpots[i]] = move.index;
 		    if ((player === aiPlayer && move.score === 10) || (player === huPlayer && move.score === -10)){
-              if (move.index === 'undefined' || move.score === 'undefined') console.log("**************** Move Undefined **************************")
 			  return move;
             } else
 			  moves.push(move);
+
+
+            // DEBUGGING
+            console.log("__MINIMAX:___")
+            console.log("BOARD: ",newBoard)
+            console.log("EMPTY CELLS: ", availSpots)
+
 		}
-        // what are we getting here?
-        console.log("MOVES: ",moves)
+
 
         // third part of minimax
 		let bestMove, bestScore;
@@ -243,10 +227,8 @@ class App extends Component {
 			}
 		}
 
-
         console.log("minimax MovesObj: ",moves[bestMove])
 
-        // return the best move
         return moves[bestMove];
     }
 
