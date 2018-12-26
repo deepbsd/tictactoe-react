@@ -37,7 +37,7 @@ class App extends Component {
     clicked(cell){
         // If game is locked, return
         if (this.gamestate.gameLocked || this.gamestate.gameOver) return ;
-        console.log("CELL: ",cell)
+        console.log("CLICKED CELL: ",cell)
 
         // Only do anything if no player has already occupied the cell
         if (typeof this.gamestate.board[cell.dataset.cell] === 'number'){
@@ -168,6 +168,7 @@ class App extends Component {
     minimax(newBoard, player){
         let huPlayer = "X";
         let aiPlayer = "O";
+        let aplayer = player;
 
         let availSpots = this.emptyCells(newBoard);
   
@@ -185,7 +186,7 @@ class App extends Component {
 		  
             let move = {};
 		    move.index = newBoard[availSpots[i]];
-		    newBoard[availSpots[i]] = player;
+            newBoard[availSpots[i]] = player || 'oh crap!';
 
 		    if (player === aiPlayer)
 			  move.score = this.minimax(newBoard, huPlayer).score;
@@ -203,6 +204,7 @@ class App extends Component {
             console.log("__MINIMAX:___")
             console.log("BOARD: ",newBoard)
             console.log("EMPTY CELLS: ", availSpots)
+            console.log("GAMESTATE MOVES: ",this.gamestate.totalMoves)
 
 		}
 
