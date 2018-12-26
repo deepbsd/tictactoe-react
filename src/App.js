@@ -12,16 +12,18 @@ class App extends Component {
             winner: undefined
         };
         this.resetState = {
-            board: Array(9).fill(''),
-            numberBoard: [0,1,2,3,4,5,6,7,8],
+            //board: Array(9).fill(''),
+            board: Array.from(Array(9).keys()),
+            //numberBoard: [0,1,2,3,4,5,6,7,8],
             totalMoves: 0,
             player: 'X',
             gameLocked: false,
             gameOver: false,
         };
         this.gamestate = {
-            board: Array(9).fill(''),
-            numberBoard: [0,1,2,3,4,5,6,7,8],
+            //board: Array(9).fill(''),
+            board: Array.from(Array(9).keys()),
+            //numberBoard: [0,1,2,3,4,5,6,7,8],
             totalMoves: 0,
             player: 'X',
             gameLocked: false,
@@ -39,9 +41,10 @@ class App extends Component {
     clicked(cell){
         // If game is locked, return
         if (this.gamestate.gameLocked || this.gamestate.gameOver) return ;
+        console.log("CELL: ",cell)
 
         // Only do anything if no player has already occupied the cell
-        if (this.gamestate.board[cell.dataset.cell] === ''){
+        if (typeof this.gamestate.board[cell.dataset.cell] === 'number'){
         
             // create 'gamestate' state so we can update it immediately and not cause a re-render
             this.gamestate.board[cell.dataset.cell] = this.gamestate.player;
@@ -89,7 +92,7 @@ class App extends Component {
             console.log("Player: ", this.gamestate.player)
             console.log("emptyCells",this.emptyCells())
             console.log("board: ",this.gamestate.board)
-            console.log("numberBoard: ",this.gamestate.numberBoard)
+            //console.log("numberBoard: ",this.gamestate.numberBoard)
             console.log("winner: ",this.checkWinner())
             console.log("checkTie", this.checkTie())
             console.log("gameOver: ",this.gamestate.gameOver)
@@ -104,30 +107,7 @@ class App extends Component {
 
     // ======= This gets called a lot from minimax
     emptyCells(board=this.gamestate.board){
-
-        // board is not in correct format in gamestate
-        // OR -- just use a different board in this.gamestate!!!
-        //for (let n=0; n<board.length; n++){
-        //    if (board[n] === "") board[n] = n;
-        //}
-
-        console.log("emptyCells() BOARD: ",board)
-        console.log("gamestate.board: ",this.gamestate.board)
-        console.log("gamestate.numberBoard: ",this.gamestate.numberBoard)
-
-        //let emptyArr = {};
-        let emptyArr = [];
-        //for (let i=0; i<this.gamestate.board.length; i++){
-        for (let i=0; i<board.length; i++){
-            //if (this.gamestate.board[i] === '') emptyArr[i] = this.gamestate.board[i];
-            if (board[i] === '') emptyArr[i] = this.gamestate.numberBoard[i];
-        }
-        //return Object.keys(emptyArr).map(function(item){
-        //    return parseInt(item, 10)
-        //});
-        //return board.filter((element, i) => i===element);
-        
-        return emptyArr.filter((element,i) => i===element);
+        return board.filter((element,i) => i===element);
     }
 
 
