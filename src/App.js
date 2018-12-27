@@ -30,13 +30,13 @@ class App extends Component {
             [0,3,6],[1,4,7],[2,5,8],
             [0,4,8],[2,4,6]
         ];
-
     }
 
 
     clicked(cell){
         // If game is locked, return
-        if (this.gamestate.gameLocked || this.gamestate.gameOver) return ;
+        if (this.gamestate.gameLocked || this.gamestate.gameOver) return;
+        // If it's a good click, tell us which cell...
         console.log("CLICKED CELL: ",cell)
 
         // Only do anything if no player has already occupied the cell
@@ -198,11 +198,10 @@ class App extends Component {
 			   move.score =  this.minimax(newBoard, aiPlayer).score;
 
 		    newBoard[availSpots[i]] = move.index;
-		    if ((player === aiPlayer && move.score === 10) || (player === huPlayer && move.score === -10)){
+		    if ((player === aiPlayer && move.score === 10) || (player === huPlayer && move.score === -10))
 			  return move;
-            } else
+            else
 			  moves.push(move);
-
 		}
 
 
