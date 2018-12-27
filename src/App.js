@@ -158,11 +158,11 @@ class App extends Component {
     // begin to use minimax algorithm
     // I will need some more functions...
     smartAi(){
-        let bestSpot = this.minimax(this.gamestate.board, this.gamestate.player);
+        let bestSpot = this.minimax(this.gamestate.board, this.gamestate.player).index;
         console.log("smart AI called! bestSpot = ",bestSpot);
 
         // gonna have to return a click event eventually
-        //this.clicked(document.querySelectorAll('.cell')[bestSpot])
+        this.clicked(document.querySelectorAll('.cell')[bestSpot])
     }
 
     minimax(newBoard, player){
