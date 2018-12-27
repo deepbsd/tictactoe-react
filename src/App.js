@@ -159,7 +159,7 @@ class App extends Component {
     // I will need some more functions...
     smartAi(){
         //let bestSpot = this.minimax(this.gamestate.board, this.gamestate.player).index;
-        let bestSpot = this.bestSpot().index;
+        let bestSpot = this.bestSpot();
         console.log("smart AI called! bestSpot = ",bestSpot);
 
         // gonna have to return a click event eventually
@@ -167,7 +167,7 @@ class App extends Component {
     }
 
     bestSpot(){
-        return this.minimax(this.gamestate.board, this.state.aiPlayer);
+        return this.minimax(this.gamestate.board, this.state.aiPlayer).index;
     }
 
     minimax(newBoard, player){
@@ -229,8 +229,6 @@ class App extends Component {
         console.log("__MINIMAX:___")
         console.log("bestScore: ",bestScore)
         console.log("bestMove: ",bestMove)
-        //console.log("EMPTY CELLS: ", availSpots)
-        //console.log("GAMESTATE MOVES: ",this.gamestate.totalMoves)
         console.log("minimax MovesObj: ",moves[bestMove])
 
         return moves[bestMove];
@@ -265,14 +263,7 @@ class App extends Component {
         </div>
 
 
-
-        {/*     <div className = "selectSym">
-                <p>Your Symbol?</p>
-                  <button onClick="selectSym('X')">X</button>
-                  <button onClick="selectSym('O')">O</button>
-                </div>   */}
-
-                <button className="restart" onClick={(ev)=>this.resetGame(ev)} >Replay</button>       
+             <button className="restart" onClick={(ev)=>this.resetGame(ev)} >Replay</button>       
 
       </div>
     );
