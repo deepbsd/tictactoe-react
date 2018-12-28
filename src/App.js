@@ -80,6 +80,7 @@ class App extends Component {
         
             // Here is where we call the AI Function for the aiPlayer
             if (this.gamestate.player === this.state.aiPlayer && !this.gamestate.gameOver){
+               
                //this.dumbAi();
                this.smartAi();
             }
@@ -89,7 +90,6 @@ class App extends Component {
             console.log("emptyCells",this.emptyCells())
             console.log("board: ",this.gamestate.board)
             console.log("winner: ",this.checkWinner())
-            console.log("checkTie", this.checkTie())
             console.log("gameOver: ",this.gamestate.gameOver)
             console.log("endingText",this.state.endingText)
             console.log("totalMoves",this.gamestate.totalMoves)
@@ -100,11 +100,6 @@ class App extends Component {
     // ======= This gets called a lot from minimax
     emptyCells(board=this.gamestate.board){
         return board.filter((element,i) => i===element);
-    }
-
-    // return true or false
-    checkTie(){
-        return this.checkWinner() === 'draw';
     }
 
     // this function is used by this.gamestate
@@ -227,6 +222,7 @@ class App extends Component {
 
         // DEBUGGING
         console.log("__MINIMAX:___")
+        console.log("Player: ",player)
         console.log("bestScore: ",bestScore)
         console.log("bestMove: ",bestMove)
         console.log("minimax MovesObj: ",moves[bestMove])
