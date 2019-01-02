@@ -1,17 +1,16 @@
 import React, { Component } from 'react';
 import '../App.css';
 
-class Board extends Component {
+export default function Board(props) {
     
+    console.log("Props: ",props);
 
-
-  render() {
     return (
       <div className="App">
 
       <h1>Unbeatable Tic Tac Toe AI</h1>
 
-        <div className="board" onClick={(ev)=>this.clicked(ev.target)}>
+        <div className="board" onClick={(ev)=>props.clicked(ev.target)}>
                 <div className="cell empty-top empty-left" id="0" data-cell="0"></div>
                 <div className="cell empty-top"            id="1" data-cell="1"></div>
                 <div className="cell empty-top empty-right" id="2" data-cell="2"></div>
@@ -25,7 +24,7 @@ class Board extends Component {
 
 
         <div className="endgame">
-            <div>{this.state.endingText}</div>
+            <div>{props.endingText}</div>
         </div>
 
 
@@ -33,8 +32,6 @@ class Board extends Component {
 
       </div>
     );
-  }
 }
 
-export default Board;
 
