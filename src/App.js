@@ -21,7 +21,7 @@ class App extends Component {
         this.gamestate = {
             board: Array.from(Array(9).keys()),
             totalMoves: 0,
-            player: 'X',
+            player: this.state.huPlayer,
             gameLocked: false,
             gameOver: false,
         };
@@ -144,7 +144,6 @@ class App extends Component {
     dumbAi(){
         let available = this.emptyCells();
         let randCell = available[Math.floor(Math.random()*available.length)];
-        console.log("dumbAI-->AVAIL: ",available, " randIndex: ",randCell)
 
         this.clicked(document.querySelectorAll('.cell')[randCell])
     }
