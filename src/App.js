@@ -87,7 +87,7 @@ class App extends Component {
 
             // Do some checking on state...
             console.log("Player: ", this.gamestate.player)
-            console.log("emptyCells",this.emptyCells())
+            console.log("emptyCells",this.emptyCells(this.gamestate.board))
             console.log("board: ",this.gamestate.board)
             console.log("winner: ",this.checkWinner())
             console.log("gameOver: ",this.gamestate.gameOver)
@@ -98,7 +98,7 @@ class App extends Component {
 
 
     // ======= This gets called a lot from minimax
-    emptyCells(board=this.gamestate.board){
+    emptyCells(board){
         return board.filter((element,i) => i===element);
     }
 
