@@ -37,7 +37,7 @@ class App extends Component {
         // If game is locked, return
         if (this.gamestate.gameLocked || this.gamestate.gameOver) return;
         // If it's a good click, tell us which cell...
-        console.log("CLICKED CELL: ",cell)
+        //console.log("CLICKED CELL: ",cell)
 
         // Only do anything if no player has already occupied the cell
         if (typeof this.gamestate.board[cell.dataset.cell] === 'number'){
@@ -169,6 +169,7 @@ class App extends Component {
         let aiPlayer = "O";
 
         let availSpots = this.emptyCells(newBoard);
+        console.log("AVAIL: ",availSpots)
   
 		if (this.checkWin(newBoard, huPlayer)) {
 		  return {score: -10};
