@@ -246,6 +246,10 @@ class App extends Component {
                gamestate={this.gamestate} winningMoves={this.winningMoves} 
                endingText={this.state.endingText} 
                checkWinner={this.checkWinner}
+               checkWin={this.checkWin}
+               smartAi={this.smartAi} bestSpot={this.bestSpot}
+               minimax={this.minimax}
+               emptyCells={this.emptyCells}
         />
 
       </div>
