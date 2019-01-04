@@ -88,8 +88,8 @@ class App extends Component {
             // Here is where we call the AI Function for the aiPlayer
             if (this.gamestate.player === this.state.aiPlayer && !this.gamestate.gameOver){
                
-               //this.dumbAi();
-               this.smartAi();
+               this.dumbAi();
+               //this.smartAi();
             }
 
             // Do some checking on state...
