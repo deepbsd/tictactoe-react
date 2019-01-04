@@ -60,46 +60,31 @@ class App extends Component {
             // human player
             if (result === this.state.huPlayer){
                 this.setWinner(this.state.huPlayer, 'Human Player Wins!')
-                //this.setState({
-                //    winner: this.state.huPlayer,
-                //    endingText: 'Human Player Wins!'
-                //})
-                //this.gamestate.gameOver = true;
             }
             // AI player
             else if (result === this.state.aiPlayer){
                 this.setWinner(this.state.aiPlayer, 'AI Player Wins!')
-                //this.setState({
-                //    winner: this.state.aiPlayer,
-                //    endingText: 'AI Player wins!'
-                //})
-                //this.gamestate.gameOver = true;
             }
             // tie game
             else if (result === 'draw'){
                 this.setWinner('Draw', "Game is a draw! (That's actually the best possible outcome!)")
-                //this.setState({
-                //    winner: 'Draw',
-                //    endingText: "Game is a draw!  (That's actually the best possible!)"
-                //})
-                //this.gamestate.gameOver = true;
             }
         
             // Here is where we call the AI Function for the aiPlayer
             if (this.gamestate.player === this.state.aiPlayer && !this.gamestate.gameOver){
                
-               this.dumbAi();
-               //this.smartAi();
+               //this.dumbAi();
+               this.smartAi();
             }
 
             // Do some checking on state...
-            console.log("Player: ", this.gamestate.player)
-            console.log("emptyCells",this.emptyCells(this.gamestate.board))
-            console.log("board: ",this.gamestate.board)
-            console.log("winner: ",this.checkWinner())
-            console.log("gameOver: ",this.gamestate.gameOver)
-            console.log("endingText",this.state.endingText)
-            console.log("totalMoves",this.gamestate.totalMoves)
+            //console.log("Player: ", this.gamestate.player)
+            //console.log("emptyCells",this.emptyCells(this.gamestate.board))
+            //console.log("board: ",this.gamestate.board)
+            //console.log("winner: ",this.checkWinner())
+            //console.log("gameOver: ",this.gamestate.gameOver)
+            //console.log("endingText",this.state.endingText)
+            //console.log("totalMoves",this.gamestate.totalMoves)
         }
     }
 
@@ -183,7 +168,7 @@ class App extends Component {
         let aiPlayer = "O";
 
         let availSpots = this.emptyCells(newBoard);
-        console.log("AVAIL: ",availSpots)
+        //console.log("AVAIL: ",availSpots)
   
 		if (this.checkWin(newBoard, huPlayer)) {
 		  return {score: -10};
@@ -235,11 +220,12 @@ class App extends Component {
 		}
 
         // DEBUGGING
-        console.log("__MINIMAX:___")
-        console.log("Player: ",player)
-        console.log("bestScore: ",bestScore)
-        console.log("bestMove: ",bestMove)
-        console.log("minimax MovesObj: ",moves[bestMove])
+        //console.log("__MINIMAX:___")
+        //console.log("Player: ",player)
+        //console.log("bestScore: ",bestScore)
+        //console.log("bestMove: ",bestMove)
+        console.log("Moves: ",moves)
+        //console.log("minimax MovesObj: ",moves[bestMove])
 
         return moves[bestMove];
     }

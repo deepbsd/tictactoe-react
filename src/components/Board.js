@@ -1,4 +1,6 @@
-import React, { Component } from 'react';
+// This used to be a class component
+//import React, { Component } from 'react';
+import React from 'react';
 import '../App.css';
 
 export default function Board(props) {
