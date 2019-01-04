@@ -7,6 +7,8 @@ class App extends Component {
     constructor(){
         super();
 
+        this.setWinner = this.setWinner.bind(this)
+
         this.state = {
             aiPlayer: '0',
             huPlayer: 'X',
@@ -57,27 +59,30 @@ class App extends Component {
 
             // human player
             if (result === this.state.huPlayer){
-                this.setState({
-                    winner: this.state.huPlayer,
-                    endingText: 'Human Player Wins!'
-                })
-                this.gamestate.gameOver = true;
+                this.setWinner(this.state.huPlayer, 'Human Player Wins!')
+                //this.setState({
+                //    winner: this.state.huPlayer,
+                //    endingText: 'Human Player Wins!'
+                //})
+                //this.gamestate.gameOver = true;
             }
             // AI player
             else if (result === this.state.aiPlayer){
-                this.setState({
-                    winner: this.state.aiPlayer,
-                    endingText: 'AI Player wins!'
-                })
-                this.gamestate.gameOver = true;
+                this.setWinner(this.state.aiPlayer, 'AI Player Wins!')
+                //this.setState({
+                //    winner: this.state.aiPlayer,
+                //    endingText: 'AI Player wins!'
+                //})
+                //this.gamestate.gameOver = true;
             }
             // tie game
             else if (result === 'draw'){
-                this.setState({
-                    winner: 'Draw',
-                    endingText: "Game is a draw!  (That's actually the best possible!)"
-                })
-                this.gamestate.gameOver = true;
+                this.setWinner('Draw', "Game is a draw! (That's actually the best possible outcome!)")
+                //this.setState({
+                //    winner: 'Draw',
+                //    endingText: "Game is a draw!  (That's actually the best possible!)"
+                //})
+                //this.gamestate.gameOver = true;
             }
         
             // Here is where we call the AI Function for the aiPlayer
@@ -98,6 +103,13 @@ class App extends Component {
         }
     }
 
+    setWinner(winner, endingText){
+        this.setState({
+            winner: winner,
+            endingText: endingText
+        })
+        this.gamestate.gameOver = true;
+    }
 
     // ======= This gets called a lot from minimax
     emptyCells(board){
@@ -144,7 +156,7 @@ class App extends Component {
 
     // create a dumbAI before to test calling clicked()
     dumbAi(){
-        let available = this.emptyCells();
+        let available = this.emptyCells(this.gamestate.board);
         let randCell = available[Math.floor(Math.random()*available.length)];
 
         this.clicked(document.querySelectorAll('.cell')[randCell])
@@ -248,8 +260,11 @@ class App extends Component {
                checkWinner={this.checkWinner}
                checkWin={this.checkWin}
                smartAi={this.smartAi} bestSpot={this.bestSpot}
+               dumbAi={this.dumbAi}
                minimax={this.minimax}
                emptyCells={this.emptyCells}
+               resetGame={this.resetGame}
+               setWinner={this.setWinner}
         />
 
       </div>

@@ -28,7 +28,7 @@ export default function Board(props) {
         </div>
 
 
-             <button className="restart" onClick={(ev)=>this.resetGame(ev)} >Replay</button>       
+             <button className="restart" onClick={(ev)=>props.resetGame(ev)} >Replay</button>       
 
       </div>
     );
