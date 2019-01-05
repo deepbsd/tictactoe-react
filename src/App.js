@@ -10,7 +10,7 @@ class App extends Component {
         this.setWinner = this.setWinner.bind(this)
 
         this.state = {
-            aiPlayer: '0',
+            aiPlayer: 'O',
             huPlayer: 'X',
             endingText: null,
             winner: undefined
@@ -164,16 +164,16 @@ class App extends Component {
     }
 
     minimax(newBoard, player){
-        //let huPlayer = "X";
-        //let aiPlayer = "O";
+        let huPlayer = "X";
+        let aiPlayer = "O";
 
         let availSpots = this.emptyCells(newBoard);
         //console.log("AVAIL: ",availSpots)
 
         // Task 1:  check for ending state
-		if (this.checkWin(newBoard, "X")) {
+		if (this.checkWin(newBoard, huPlayer)) {
 		  return {score: -10};
-		} else if (this.checkWin(newBoard, "O")) {
+		} else if (this.checkWin(newBoard, aiPlayer)) {
 		  return {score: 10};
 		} else if (availSpots.length === 0) {
 		  return {score: 0};
@@ -187,13 +187,15 @@ class App extends Component {
 		    move.index = newBoard[availSpots[i]];
             newBoard[availSpots[i]] = player;
 
-		    if (player === "O")
-			  move.score = this.minimax(newBoard, "X").score;
-		    else
-			   move.score =  this.minimax(newBoard, "O").score;
+		    if (player === aiPlayer){
+			  move.score = this.minimax(newBoard, huPlayer).score;
+            }else{
+			  move.score =  this.minimax(newBoard, aiPlayer).score;
+
+            }
 
 		    newBoard[availSpots[i]] = move.index;
-		    if ((player === "O" && move.score === 10) || (player === "X" && move.score === -10))
+		    if ((player === aiPlayer && move.score === 10) || (player === huPlayer && move.score === -10))
 			  return move;
             else
 			  moves.push(move);
@@ -203,13 +205,12 @@ class App extends Component {
         // Task 3: find best move index/score from moves object
         //         -- this will depend on which player the AI is playing as
 		let bestMove, bestScore;
-		if (player === "O") {
+		if (player === aiPlayer) {
 		    bestScore = -1000;
 		    for(let i = 0; i < moves.length; i++) {
 		        if (moves[i].score > bestScore) {
 				    bestScore = moves[i].score;
 				    bestMove = i;
-                    //console.log("aiPlayer bestMove: ",{bestMove,bestScore})
 			    }
 			}
 	    } else {
@@ -218,7 +219,6 @@ class App extends Component {
 			    if (moves[i].score < bestScore) {
 				    bestScore = moves[i].score;
 				    bestMove = i;
-                    //console.log("huPlayer bestMove: ",{bestMove,bestScore})
 			    }
 			}
 		}
@@ -229,11 +229,9 @@ class App extends Component {
         //console.log("bestScore: ",bestScore)
         //console.log("bestMove: ",bestMove)
         //console.log("Moves: ",moves)
-        if ((moves[bestMove].score === 10) && player === "O"){
-          console.log("minimax MovesObj: ",moves[bestMove])
-        }
 
         // Task 4: Actually return the best possible move found in Task 3
+        //console.log("MOVES: ",moves[bestMove], " Player: ",player)
         return moves[bestMove];
     }
 
