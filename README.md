@@ -15,3 +15,11 @@ manipulated on the parent from the child component, however, the answer being
 returned from Minimax is simply wrong.
 
 The performance hit seems to be minimal now that I've removed many of the console.logs.
+
+5 Jan 2019
+
+Finally!  The app is basically working.  The correct answer is being returned by Minimax!
+The problem was that this.state.aiPlayer was set to zero rather than capital 'O'!!!!
+It only took me about three weeks to find that error!!!!!
+
+Now I was going to refactor this a bit more so it behaves more like a real React App!
