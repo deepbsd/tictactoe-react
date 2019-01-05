@@ -15,13 +15,6 @@ class App extends Component {
             endingText: null,
             winner: undefined
         };
-        this.resetState = {
-            board: Array.from(Array(9).keys()),
-            totalMoves: 0,
-            player: 'X',
-            gameLocked: false,
-            gameOver: false,
-        };
         this.gamestate = {
             board: Array.from(Array(9).keys()),
             totalMoves: 0,
@@ -40,8 +33,6 @@ class App extends Component {
     clicked(cell){
         // If game is locked, return
         if (this.gamestate.gameLocked || this.gamestate.gameOver) return;
-        // If it's a good click, tell us which cell...
-        //console.log("CLICKED CELL: ",cell)
 
         // Only do anything if no player has already occupied the cell
         if (typeof this.gamestate.board[cell.dataset.cell] === 'number'){
@@ -77,14 +68,7 @@ class App extends Component {
                this.smartAi();
             }
 
-            // Do some checking on state...
-            //console.log("Player: ", this.gamestate.player)
-            //console.log("emptyCells",this.emptyCells(this.gamestate.board))
-            //console.log("board: ",this.gamestate.board)
-            //console.log("winner: ",this.checkWinner())
-            //console.log("gameOver: ",this.gamestate.gameOver)
-            //console.log("endingText",this.state.endingText)
-            //console.log("totalMoves",this.gamestate.totalMoves)
+            // Do some logging here if necessary...
         }
     }
 
@@ -151,9 +135,8 @@ class App extends Component {
     // begin to use minimax algorithm
     // I will need some more functions...
     smartAi(){
-        //let bestSpot = this.minimax(this.gamestate.board, this.gamestate.player).index;
         let bestSpot = this.bestSpot();
-        console.log("smart AI called! bestSpot = ",bestSpot);
+        console.log("AI Returns the best spot: ", bestSpot)
 
         // gonna have to return a click event eventually
         this.clicked(document.querySelectorAll('.cell')[bestSpot])
@@ -168,7 +151,6 @@ class App extends Component {
         let aiPlayer = "O";
 
         let availSpots = this.emptyCells(newBoard);
-        //console.log("AVAIL: ",availSpots)
 
         // Task 1:  check for ending state
 		if (this.checkWin(newBoard, huPlayer)) {
@@ -227,11 +209,9 @@ class App extends Component {
         //console.log("__MINIMAX:___")
         //console.log("Player: ",player)
         //console.log("bestScore: ",bestScore)
-        //console.log("bestMove: ",bestMove)
-        //console.log("Moves: ",moves)
+        //console.log("bestMove: ",moves[bestMove])
 
         // Task 4: Actually return the best possible move found in Task 3
-        //console.log("MOVES: ",moves[bestMove], " Player: ",player)
         return moves[bestMove];
     }
 
