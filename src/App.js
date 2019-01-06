@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import './App.css';
-import Board from './components/Board'
+import Board from './components/Board';
+
+
+import {winningMoves,emptyCells,checkWin,bestSpot,randomSpot,minimax} from './components/aiModule';
 
 
 
@@ -25,11 +28,11 @@ class App extends Component {
             gameLocked: false,
             gameOver: false,
         };
-        this.winningMoves = [
-            [0,1,2],[3,4,5],[6,7,8],
-            [0,3,6],[1,4,7],[2,5,8],
-            [0,4,8],[2,4,6]
-        ];
+        //this.winningMoves = [
+        //    [0,1,2],[3,4,5],[6,7,8],
+        //    [0,3,6],[1,4,7],[2,5,8],
+        //    [0,4,8],[2,4,6]
+        //];
     }
 
 
@@ -67,7 +70,7 @@ class App extends Component {
             // Here is where we call the AI Function for the aiPlayer
             if (this.gamestate.player === this.state.aiPlayer && !this.gamestate.gameOver){
                
-               //this.dumbAi();
+               //this.dumbAi(this.gamestate.board);
                this.smartAi();
             }
 
@@ -83,15 +86,11 @@ class App extends Component {
         this.gamestate.gameOver = true;
     }
 
-    // ======= This gets called a lot from minimax
-    emptyCells(board){
-        return board.filter((element,i) => i===element);
-    }
 
     // this function is used by this.gamestate
     // not for use by minimax
     checkWinner(){
-        let moves = this.winningMoves;
+        let moves = winningMoves;
 
         let board = this.gamestate.board;
 
@@ -106,25 +105,13 @@ class App extends Component {
         }
     }
 
-    // trying out another checkWin() function
-    // this will be used by minimax() and must not affect state
-    checkWin(board, player) {
-      let winCombos = this.winningMoves;
-	  let plays = board.reduce((a, e, i) => (e === player) ? a.concat(i) : a, []);
-	  let gameWon = null;
-	  for (let [index, win] of winCombos.entries()) {
-		if (win.every(elem => plays.indexOf(elem) > -1)) {
-		  gameWon = {index: index, player: player};
-		  break;
-		}   
-	  }
-	  return gameWon;
-    }
 
     // create a dumbAI before to test calling clicked()
     dumbAi(){
-        let available = this.emptyCells(this.gamestate.board);
-        let randCell = available[Math.floor(Math.random()*available.length)];
+        //let available = this.emptyCells(this.gamestate.board);
+        //let randCell = available[Math.floor(Math.random()*available.length)];
+        let randCell = randomSpot(this.gamestate.board)
+        console.log("dumbAi--RandCell: ",randCell)
 
         this.clicked(document.querySelectorAll('.cell')[randCell])
     }
@@ -133,79 +120,13 @@ class App extends Component {
     // begin to use minimax algorithm
     // I will need some more functions...
     smartAi(){
-        let bestSpot = this.bestSpot();
+        let bestCell = bestSpot(this.gamestate.board, this.state.aiPlayer);
         console.log("AI Returns the best spot: ", bestSpot)
 
         // gonna have to return a click event eventually
-        this.clicked(document.querySelectorAll('.cell')[bestSpot])
+        this.clicked(document.querySelectorAll('.cell')[bestCell])
     }
 
-    bestSpot(){
-        return this.minimax(this.gamestate.board, this.state.aiPlayer).index;
-    }
-
-    minimax(newBoard, player){
-        let huPlayer = "X";
-        let aiPlayer = "O";
-
-        let availSpots = this.emptyCells(newBoard);
-
-        // Task 1:  check for ending state
-		if (this.checkWin(newBoard, huPlayer)) {
-		  return {score: -10};
-		} else if (this.checkWin(newBoard, aiPlayer)) {
-		  return {score: 10};
-		} else if (availSpots.length === 0) {
-		  return {score: 0};
-		}
-
-        // Task 2:  collect scored moves/indexes for remaining empty cells
-		let moves = [];
-		for (let i = 0; i < availSpots.length; i++) {
-		  
-            let move = {};
-		    move.index = newBoard[availSpots[i]];
-            newBoard[availSpots[i]] = player;
-
-		    if (player === aiPlayer){
-			  move.score = this.minimax(newBoard, huPlayer).score;
-            }else{
-			  move.score =  this.minimax(newBoard, aiPlayer).score;
-
-            }
-
-		    newBoard[availSpots[i]] = move.index;
-		    if ((player === aiPlayer && move.score === 10) || (player === huPlayer && move.score === -10))
-			  return move;
-            else
-			  moves.push(move);
-		}
-
-
-        // Task 3: find best move index/score from moves object
-        //         -- this will depend on which player the AI is playing as
-		let bestMove, bestScore;
-		if (player === aiPlayer) {
-		    bestScore = -1000;
-		    for(let i = 0; i < moves.length; i++) {
-		        if (moves[i].score > bestScore) {
-				    bestScore = moves[i].score;
-				    bestMove = i;
-			    }
-			}
-	    } else {
-	        bestScore = 1000;
-		    for(let i = 0; i < moves.length; i++) {
-			    if (moves[i].score < bestScore) {
-				    bestScore = moves[i].score;
-				    bestMove = i;
-			    }
-			}
-		}
-
-        // Task 4: Actually return the best possible move found in Task 3
-        return moves[bestMove];
-    }
 
     resetGame(ev){
         window.location.reload();
