@@ -2,10 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 import Board from './components/Board';
 
-
 import {winningMoves,emptyCells,checkWin,bestSpot,randomSpot,minimax} from './components/aiModule';
-
-
 
 
 class App extends Component {
@@ -28,11 +25,6 @@ class App extends Component {
             gameLocked: false,
             gameOver: false,
         };
-        //this.winningMoves = [
-        //    [0,1,2],[3,4,5],[6,7,8],
-        //    [0,3,6],[1,4,7],[2,5,8],
-        //    [0,4,8],[2,4,6]
-        //];
     }
 
 
@@ -121,7 +113,7 @@ class App extends Component {
     // I will need some more functions...
     smartAi(){
         let bestCell = bestSpot(this.gamestate.board, this.state.aiPlayer);
-        console.log("AI Returns the best spot: ", bestSpot)
+        console.log("AI Returns the best spot: ", bestCell)
 
         // gonna have to return a click event eventually
         this.clicked(document.querySelectorAll('.cell')[bestCell])
@@ -142,11 +134,11 @@ class App extends Component {
                gamestate={this.gamestate} winningMoves={this.winningMoves} 
                endingText={this.state.endingText} 
                checkWinner={this.checkWinner}
-               checkWin={this.checkWin}
-               smartAi={this.smartAi} bestSpot={this.bestSpot}
+               checkWin={checkWin}
+               smartAi={this.smartAi} bestSpot={bestSpot}
                dumbAi={this.dumbAi}
-               minimax={this.minimax}
-               emptyCells={this.emptyCells}
+               minimax={minimax}
+               emptyCells={emptyCells}
                resetGame={this.resetGame}
                setWinner={this.setWinner}
         />
