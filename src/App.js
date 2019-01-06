@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import './App.css';
 import Board from './components/Board'
 
+
+
+
 class App extends Component {
 
     constructor(){
@@ -88,13 +91,8 @@ class App extends Component {
     // this function is used by this.gamestate
     // not for use by minimax
     checkWinner(){
-        // create possible winning moves
-        let moves = [
-            [0,1,2],[3,4,5],[6,7,8],
-            [0,3,6],[1,4,7],[2,5,8],
-            [0,4,8],[2,4,6]
-        ];
-        
+        let moves = this.winningMoves;
+
         let board = this.gamestate.board;
 
         // iterate through each winning combination and check with state.board
