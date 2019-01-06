@@ -12,7 +12,7 @@ class App extends Component {
         this.state = {
             aiPlayer: 'O',
             huPlayer: 'X',
-            endingText: null,
+            endingText: 'Try to Best Mr. Unbeatable!',
             winner: undefined
         };
         this.gamestate = {
@@ -161,7 +161,7 @@ class App extends Component {
 		  return {score: 0};
 		}
 
-        // Task 2:  collect scored moves/indexes for available cells
+        // Task 2:  collect scored moves/indexes for remaining empty cells
 		let moves = [];
 		for (let i = 0; i < availSpots.length; i++) {
 		  
@@ -204,12 +204,6 @@ class App extends Component {
 			    }
 			}
 		}
-
-        // DEBUGGING
-        //console.log("__MINIMAX:___")
-        //console.log("Player: ",player)
-        //console.log("bestScore: ",bestScore)
-        //console.log("bestMove: ",moves[bestMove])
 
         // Task 4: Actually return the best possible move found in Task 3
         return moves[bestMove];
