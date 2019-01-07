@@ -34,14 +34,12 @@ export function checkWin(board, player) {
 // this function must now be called with parameters because gamestate 
 // does not exist in this function
 export function bestSpot(board,aiPlayer){
-    //return this.minimax(this.gamestate.board, this.state.aiPlayer).index;
     return minimax(board, aiPlayer).index;
 }
 
 
 // this function now requires a board to work with
 export function randomSpot(board){
-    //let available = this.emptyCells(this.gamestate.board);
     let available = emptyCells(board);
     let randCell = available[Math.floor(Math.random()*available.length)];
     return randCell;
