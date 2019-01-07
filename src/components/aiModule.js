@@ -9,12 +9,13 @@ export const winningMoves = [
          [0,4,8],[2,4,6]
 ];
 
-// ======= This gets called a lot from minimax
+
+// This gets called a lot from minimax
 export function emptyCells(board){
     return board.filter((element,i) => i===element);
 }
 
-// trying out another checkWin() function
+
 // this will be used by minimax() and must not affect state
 export function checkWin(board, player) {
   let winCombos = winningMoves;
@@ -29,12 +30,14 @@ export function checkWin(board, player) {
   return gameWon;
 }
     
+
 // this function must now be called with parameters because gamestate 
 // does not exist in this function
 export function bestSpot(board,aiPlayer){
     //return this.minimax(this.gamestate.board, this.state.aiPlayer).index;
     return minimax(board, aiPlayer).index;
 }
+
 
 // this function now requires a board to work with
 export function randomSpot(board){
@@ -43,6 +46,7 @@ export function randomSpot(board){
     let randCell = available[Math.floor(Math.random()*available.length)];
     return randCell;
 }
+
 
 export function minimax(newBoard, player){
     let huPlayer = "X";
@@ -108,11 +112,3 @@ export function minimax(newBoard, player){
 }
 
 
-//module.exports = {
-//  winningMoves: winningMoves,
-//  emptyCells: emptyCells,
-//  checkWin: checkWin,
-//  bestSpot: bestSpot,
-//  randomSpot: randomSpot,
-//  minimax: minimax
-//};

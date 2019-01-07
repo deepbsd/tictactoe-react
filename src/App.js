@@ -31,34 +31,26 @@ class App extends Component {
     clicked(cell){
         // If game is locked, return
         if (this.gamestate.gameLocked || this.gamestate.gameOver) return;
-
         // Only do anything if no player has already occupied the cell
         if (typeof this.gamestate.board[cell.dataset.cell] === 'number'){
-        
             // create 'gamestate' state so we can update it immediately and not cause a re-render
             this.gamestate.board[cell.dataset.cell] = this.gamestate.player;
             cell.innerText = this.gamestate.player;
-
             // update the moves, whoever generates a 'click' and change the player accordingly
             this.gamestate.player = this.gamestate.player === this.state.huPlayer ? this.state.aiPlayer : this.state.huPlayer;
             this.gamestate.totalMoves++;
 
-            // check for game completion and resulting outcome
-            let result = this.checkWinner();
-
-            // human player
-            if (result === this.state.huPlayer){
+            // if huPlayer is winner
+            if (this.checkWinner() === this.state.huPlayer){
                 this.setWinner(this.state.huPlayer, 'Human Player Wins!')
             }
-            // AI player
-            else if (result === this.state.aiPlayer){
+            // if aiPlayer is winner
+            else if (this.checkWinner() === this.state.aiPlayer){
                 this.setWinner(this.state.aiPlayer, 'AI Player Wins!')
             }
-            // tie game
-            else if (result === 'draw'){
+            else if (this.checkWinner() === 'draw'){
                 this.setWinner('Draw', "Game is a draw! (That's actually the best possible outcome!)")
             }
-        
             // Here is where we call the AI Function for the aiPlayer
             if (this.gamestate.player === this.state.aiPlayer && !this.gamestate.gameOver){
                
@@ -66,7 +58,6 @@ class App extends Component {
                this.smartAi();
             }
 
-            // Do some logging here if necessary...
         }
     }
 
@@ -100,8 +91,6 @@ class App extends Component {
 
     // create a dumbAI before to test calling clicked()
     dumbAi(){
-        //let available = this.emptyCells(this.gamestate.board);
-        //let randCell = available[Math.floor(Math.random()*available.length)];
         let randCell = randomSpot(this.gamestate.board)
         console.log("dumbAi--RandCell: ",randCell)
 
@@ -109,8 +98,7 @@ class App extends Component {
     }
 
 
-    // begin to use minimax algorithm
-    // I will need some more functions...
+    // call minimax algorithm
     smartAi(){
         let bestCell = bestSpot(this.gamestate.board, this.state.aiPlayer);
         console.log("AI Returns the best spot: ", bestCell)
