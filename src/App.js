@@ -110,7 +110,8 @@ class App extends Component {
     return (
       <div className="App">
 
-        <Board clicked={this.clicked}  state={this.state} 
+        <Board 
+               clicked={this.clicked}  state={this.state} 
                gamestate={this.gamestate} winningMoves={this.winningMoves} 
                endingText={this.state.endingText} 
                checkWinner={this.checkWinner}
