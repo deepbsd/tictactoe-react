@@ -29,22 +29,20 @@ class App extends Component {
 
 
     clicked(cell){
-        // If game is locked, return
         if (this.gamestate.gameLocked || this.gamestate.gameOver) return;
-        // Only do anything if no player has already occupied the cell
+        
         if (typeof this.gamestate.board[cell.dataset.cell] === 'number'){
-            // create 'gamestate' state so we can update it immediately and not cause a re-render
+            
             this.gamestate.board[cell.dataset.cell] = this.gamestate.player;
             cell.innerText = this.gamestate.player;
-            // update the moves, whoever generates a 'click' and change the player accordingly
+            
+            // change players...
             this.gamestate.player = this.gamestate.player === this.state.huPlayer ? this.state.aiPlayer : this.state.huPlayer;
             this.gamestate.totalMoves++;
 
-            // if huPlayer is winner
             if (this.checkWinner() === this.state.huPlayer){
                 this.setWinner(this.state.huPlayer, 'Human Player Wins!')
             }
-            // if aiPlayer is winner
             else if (this.checkWinner() === this.state.aiPlayer){
                 this.setWinner(this.state.aiPlayer, 'AI Player Wins!')
             }
@@ -57,7 +55,6 @@ class App extends Component {
                //this.dumbAi(this.gamestate.board);
                this.smartAi();
             }
-
         }
     }
 
@@ -69,12 +66,9 @@ class App extends Component {
         this.gamestate.gameOver = true;
     }
 
-
-    // this function is used by this.gamestate
-    // not for use by minimax
+    // not used by minimax
     checkWinner(){
         let moves = winningMoves;
-
         let board = this.gamestate.board;
 
         // iterate through each winning combination and check with state.board
@@ -92,8 +86,6 @@ class App extends Component {
     // create a dumbAI before to test calling clicked()
     dumbAi(){
         let randCell = randomSpot(this.gamestate.board)
-        console.log("dumbAi--RandCell: ",randCell)
-
         this.clicked(document.querySelectorAll('.cell')[randCell])
     }
 
