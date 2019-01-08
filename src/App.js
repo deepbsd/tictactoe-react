@@ -22,14 +22,13 @@ class App extends Component {
             board: Array.from(Array(9).keys()),
             totalMoves: 0,
             player: this.state.huPlayer,
-            gameLocked: false,
             gameOver: false,
         };
     }
 
 
     clicked(cell){
-        if (this.gamestate.gameLocked || this.gamestate.gameOver) return;
+        if (this.gamestate.gameOver) return;
         
         if (typeof this.gamestate.board[cell.dataset.cell] === 'number'){
             
