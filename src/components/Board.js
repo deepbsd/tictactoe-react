@@ -25,8 +25,8 @@ export default function Board(props) {
         </div>
 
 
-        <div className="endgame">
-            <div>{props.endingText}</div>
+        <div className="feedback">
+            <div>{props.feedback}</div>
         </div>
 
 

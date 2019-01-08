@@ -15,7 +15,7 @@ class App extends Component {
         this.state = {
             aiPlayer: 'O',
             huPlayer: 'X',
-            endingText: 'Try to Best Mr. Unbeatable!',
+            feedback: 'Try to Best Mr. Unbeatable!',
             winner: undefined
         };
         this.gamestate = {
@@ -58,10 +58,10 @@ class App extends Component {
         }
     }
 
-    setWinner(winner, endingText){
+    setWinner(winner, feedback){
         this.setState({
             winner: winner,
-            endingText: endingText
+            feedback: feedback,
         })
         this.gamestate.gameOver = true;
     }
@@ -113,7 +113,7 @@ class App extends Component {
         <Board 
                clicked={this.clicked}  state={this.state} 
                gamestate={this.gamestate} winningMoves={this.winningMoves} 
-               endingText={this.state.endingText} 
+               feedback={this.state.feedback} 
                checkWinner={this.checkWinner}
                checkWin={checkWin}
                smartAi={this.smartAi} bestSpot={bestSpot}
