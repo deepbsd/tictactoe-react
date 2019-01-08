@@ -38,7 +38,7 @@ export function bestSpot(board,aiPlayer){
 }
 
 
-// this function now requires a board to work with
+// this gets called by "dumbAi" when applicable
 export function randomSpot(board){
     let available = emptyCells(board);
     let randCell = available[Math.floor(Math.random()*available.length)];
