@@ -23,3 +23,11 @@ The problem was that this.state.aiPlayer was set to zero rather than capital 'O'
 It only took me about three weeks to find that error!!!!!
 
 Now I was going to refactor this a bit more so it behaves more like a real React App!
+
+9 Jan 2019
+
+I'm trying to figure out how to isolate the gamestate from the app state.  If I tie app 
+state to gamestate, then that drives too many re-renders of the app and makes a mess.
+If I keep gamestate (the board) separate from the app state, the app continues working
+as it does now, but then what's the advantage of moving state out of the App component
+at all?  Doesn't seem like there's an improvement with using Redux at all?
