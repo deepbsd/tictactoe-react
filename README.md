@@ -31,3 +31,10 @@ state to gamestate, then that drives too many re-renders of the app and makes a 
 If I keep gamestate (the board) separate from the app state, the app continues working
 as it does now, but then what's the advantage of moving state out of the App component
 at all?  Doesn't seem like there's an improvement with using Redux at all?
+
+9 Jan 2019
+
+At this point I don't see the advantage to using Redux on this app.  If my opinion 
+changes at some point in the future, I'll happily add an action creator and reducer.
+I think for the time being, though, I'll remove those directories and simply keep
+the app state inside the App component...
