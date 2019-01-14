@@ -11,18 +11,17 @@ class App extends Component {
         super();
 
         this.setWinner = this.setWinner.bind(this)
-        this.chooseMarker = this.chooseMarker.bind(this)
 
         this.state = {
-            aiPlayer: null,
-            huPlayer: null,
+            aiPlayer: 'O',
+            huPlayer: 'X',
             feedback: 'Try to Best Mr. Unbeatable!',
             winner: undefined
         };
         this.gamestate = {
             board: Array.from(Array(9).keys()),
             totalMoves: 0,
-            player: undefined,
+            player: this.state.huPlayer,
             gameOver: false,
         };
     }
@@ -32,12 +31,6 @@ class App extends Component {
         if (this.gamestate.gameOver) return;
         
         if (typeof this.gamestate.board[cell.dataset.cell] === 'number'){
-
-            //if (this.gamestate.player === null) this.gamestate.player = this.state.huPlayer;
-            console.log("clicked - huPlayer: ",this.state.huPlayer)
-            console.log("clicked - aiPlayer: ",this.state.aiPlayer)
-            console.log("Gamestate Player: ",this.gamestate.player)
-            
 
             this.gamestate.board[cell.dataset.cell] = this.gamestate.player;
             cell.innerText = this.gamestate.player;
@@ -107,31 +100,6 @@ class App extends Component {
         this.clicked(document.querySelectorAll('.cell')[bestCell])
     }
 
-    chooseMarker(huMarker, aiMarker){
-        
-        let that = this;
-
-        const setMarker = new Promise((resolve,reject) => {
-            resolve(
-                that.setState({
-                   aiPlayer: aiMarker,
-                   huPlayer: huMarker
-                })
-            )
-
-
-        })
-
-
-        if (huMarker === 'X') this.gamestate.player = huMarker; 
-
-        let smartAi = this.smartAi();
-
-        if (aiMarker === 'X') {
-            this.gamestate.player = aiMarker;
-            setMarker().then(smartAi());
-        }
-    }
 
     resetGame(ev){
         window.location.reload();
@@ -153,7 +121,6 @@ class App extends Component {
                dumbAi={this.dumbAi}
                minimax={minimax}
                emptyCells={emptyCells}
-               chooseMarker={this.chooseMarker}
                resetGame={this.resetGame}
                setWinner={this.setWinner}
         />
