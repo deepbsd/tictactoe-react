@@ -108,16 +108,28 @@ class App extends Component {
     }
 
     chooseMarker(huMarker, aiMarker){
+        
+        let that = this;
 
-        this.setState({
-           aiPlayer: aiMarker,
-           huPlayer: huMarker
-        });
+        const setMarker = new Promise((resolve,reject) => {
+            resolve(
+                that.setState({
+                   aiPlayer: aiMarker,
+                   huPlayer: huMarker
+                })
+            )
 
-        if (huMarker === 'X') this.gamestate.player = huMarker;
+
+        })
+
+
+        if (huMarker === 'X') this.gamestate.player = huMarker; 
+
+        let smartAi = this.smartAi();
+
         if (aiMarker === 'X') {
             this.gamestate.player = aiMarker;
-            this.smartAi();
+            setMarker().then(smartAi());
         }
     }
 
