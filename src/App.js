@@ -22,7 +22,7 @@ class App extends Component {
         this.gamestate = {
             board: Array.from(Array(9).keys()),
             totalMoves: 0,
-            player: this.state.huPlayer,
+            player: undefined,
             gameOver: false,
         };
     }
@@ -33,8 +33,9 @@ class App extends Component {
         
         if (typeof this.gamestate.board[cell.dataset.cell] === 'number'){
 
-            if (this.gamestate.player === null) this.gamestate.player = this.state.huPlayer;
-            console.log("Player: ",this.state.huPlayer)
+            //if (this.gamestate.player === null) this.gamestate.player = this.state.huPlayer;
+            console.log("clicked - huPlayer: ",this.state.huPlayer)
+            console.log("clicked - aiPlayer: ",this.state.aiPlayer)
             console.log("Gamestate Player: ",this.gamestate.player)
             
 
@@ -46,10 +47,11 @@ class App extends Component {
             this.gamestate.player = this.gamestate.player === this.state.huPlayer ? this.state.aiPlayer : this.state.huPlayer;
             this.gamestate.totalMoves++;
 
-            if (this.checkWinner() === this.state.huPlayer){
+            if ((this.state.huPlayer) && (this.checkWinner() === this.state.huPlayer)){
+                console.log("checkWinner, huPlayer: ",this.state.huPlayer)
                 this.setWinner(this.state.huPlayer, 'Human Player Wins!')
             }
-            else if (this.checkWinner() === this.state.aiPlayer){
+            else if ((this.state.aiPlayer) && (this.checkWinner() === this.state.aiPlayer)){
                 this.setWinner(this.state.aiPlayer, 'AI Player Wins!')
             }
             else if (this.checkWinner() === 'draw'){
@@ -106,11 +108,17 @@ class App extends Component {
     }
 
     chooseMarker(huMarker, aiMarker){
+
         this.setState({
            aiPlayer: aiMarker,
            huPlayer: huMarker
-        })
+        });
 
+        if (huMarker === 'X') this.gamestate.player = huMarker;
+        if (aiMarker === 'X') {
+            this.gamestate.player = aiMarker;
+            this.smartAi();
+        }
     }
 
     resetGame(ev){
