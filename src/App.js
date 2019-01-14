@@ -11,10 +11,11 @@ class App extends Component {
         super();
 
         this.setWinner = this.setWinner.bind(this)
+        this.chooseMarker = this.chooseMarker.bind(this)
 
         this.state = {
-            aiPlayer: 'O',
-            huPlayer: 'X',
+            aiPlayer: null,
+            huPlayer: null,
             feedback: 'Try to Best Mr. Unbeatable!',
             winner: undefined
         };
@@ -31,9 +32,15 @@ class App extends Component {
         if (this.gamestate.gameOver) return;
         
         if (typeof this.gamestate.board[cell.dataset.cell] === 'number'){
+
+            if (this.gamestate.player === null) this.gamestate.player = this.state.huPlayer;
+            console.log("Player: ",this.state.huPlayer)
+            console.log("Gamestate Player: ",this.gamestate.player)
             
+
             this.gamestate.board[cell.dataset.cell] = this.gamestate.player;
             cell.innerText = this.gamestate.player;
+
             
             // change players...
             this.gamestate.player = this.gamestate.player === this.state.huPlayer ? this.state.aiPlayer : this.state.huPlayer;
@@ -98,6 +105,13 @@ class App extends Component {
         this.clicked(document.querySelectorAll('.cell')[bestCell])
     }
 
+    chooseMarker(huMarker, aiMarker){
+        this.setState({
+           aiPlayer: aiMarker,
+           huPlayer: huMarker
+        })
+
+    }
 
     resetGame(ev){
         window.location.reload();
@@ -119,6 +133,7 @@ class App extends Component {
                dumbAi={this.dumbAi}
                minimax={minimax}
                emptyCells={emptyCells}
+               chooseMarker={this.chooseMarker}
                resetGame={this.resetGame}
                setWinner={this.setWinner}
         />

@@ -29,6 +29,11 @@ export default function Board(props) {
             <div>{props.feedback}</div>
         </div>
 
+        <div className="chooseMarker">
+            <p>Your Choice?</p>
+            <button onClick={(huPlayer, aiPlayer) => props.chooseMarker('X','O')}>X</button>
+            <button onClick={(huPlayer, aiPlayer) => props.chooseMarker('O','X')}>O</button>
+        </div>
 
              <button className="restart" onClick={(ev)=>props.resetGame(ev)} >Replay</button>       
 
