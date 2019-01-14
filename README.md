@@ -46,3 +46,9 @@ his/her marker).  Had a rejected push after adding some functionality.  Did a +m
 so a forced push.  Should be fine.  Not sure who else would be pushing to the repo; I'm
 pretty sure I'm the only one committing to it!  Maybe an internal change at github?
 Anyway, Hope I didn't lose anything...
+
+14 Jan 2019
+
+Hit a wall with setState being too slow.  Tried to put it into a Promise, but that
+didn't work out.  I just changed the game back to the way it was before I started
+today.
