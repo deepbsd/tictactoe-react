@@ -38,3 +38,11 @@ At this point I don't see the advantage to using Redux on this app.  If my opini
 changes at some point in the future, I'll happily add an action creator and reducer.
 I think for the time being, though, I'll remove those directories and simply keep
 the app state inside the App component...
+
+14 Jan 2019
+
+Took some time off.  Working now on adding marker choice to game (player gets to choose
+his/her marker).  Had a rejected push after adding some functionality.  Did a +master
+so a forced push.  Should be fine.  Not sure who else would be pushing to the repo; I'm
+pretty sure I'm the only one committing to it!  Maybe an internal change at github?
+Anyway, Hope I didn't lose anything...
